@@ -37,11 +37,13 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		Device::KeyUpdate();
 
-		s_DXManager->StartDraw();
-
-		s_DXManager->Transform();
-
-		s_DXManager->SetLighting();
+#if 1
+		// 2D•`‰æ
+		s_DXManager->StartDraw2D();
+#else
+		// 3D•`‰æ
+		s_DXManager->StartDraw3D();
+#endif
 
 		Size font_size{ 32.f,32.f };
 		s_DXManager->CreateFontDevice(font_size);

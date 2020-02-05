@@ -140,6 +140,16 @@ void DXManager::StartDraw() {
 	m_DXStatus.m_D3DDevice->BeginScene();
 }
 
+void DXManager::StartDraw2D(){
+	StartDraw();
+	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+}
+void DXManager::StartDraw3D(){
+	StartDraw();
+	Transform();
+	SetLighting();
+}
+
 void DXManager::EndDraw() {
 
 	m_DXStatus.m_D3DDevice->EndScene();

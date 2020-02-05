@@ -49,6 +49,9 @@ public:
 	*/
 	void StartDraw();
 
+	void StartDraw2D();
+	void StartDraw3D();
+
 	/**
 	* @brief DirectX‚Å‚Ì•`‰æî•ñ‚ğ‰ğ•ú
 	*/
