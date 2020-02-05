@@ -12,8 +12,6 @@ void Drawer2D::DrawSetting(float x_, float y_, float z_) {
 	// ƒ[ƒ‹ƒh, ˆÚ“®, Šgks—ñ‚ð—pˆÓ
 	D3DXMATRIXA16 world, trans, scale, rot;
 	D3DXMatrixIdentity(&world);
-	D3DXMatrixIdentity(&trans);
-	D3DXMatrixIdentity(&scale);
 	D3DXMatrixIdentity(&rot);
 
 	// Šgk
@@ -27,7 +25,7 @@ void Drawer2D::DrawSetting(float x_, float y_, float z_) {
 	HandMade::BillBoard(&world, Ins_DXManager->GetViewMatrix());
 
 	// Šgk‚ÆˆÚ“®s—ñ‚ð”½‰f
-	world *= scale * trans * rot;
+	world *= scale * rot * trans;
 	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world);
 
 	// ƒ‰ƒCƒeƒBƒ“ƒO
@@ -191,4 +189,11 @@ void Drawer2D::DrawFont(Vec2 pos_,std::string text_) {
 		DT_LEFT,
 		D3DCOLOR_XRGB(255,255,255)
 	);
+}
+
+void Drawer2D::Release(std::string file_name_) {
+
+	delete m_TextureList[file_name_];
+
+	m_TextureList.clear();
 }

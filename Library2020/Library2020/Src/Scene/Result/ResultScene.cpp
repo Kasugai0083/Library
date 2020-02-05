@@ -7,7 +7,9 @@ ResultScene::~ResultScene()
 
 void ResultScene::Init() {
 	if (!drawer.CreateTexture("Res/bomb.png")) {
-		MessageBox(NULL, "画像の読み込みに失敗2", NULL, MB_OK);
+		// 数十秒起動するとここでエラー
+		// シーンを切り替えまくると早めにエラーが出る模様
+		MessageBox(NULL, "Res/bomb.png 読み込みに失敗", NULL, MB_OK);
 	}
 	m_State = SceneState::UPDATE;
 }
@@ -17,12 +19,16 @@ void ResultScene::Update() {
 	slider1.Update();
 	slider2.Update();
 
-	if (Device::KeyPress('A')) {
-		m_State = SceneState::END;
-	}
+	if (Device::HasClickOnMouse()) { m_State = SceneState::END; }
 }
 
 SceneID ResultScene::End() {
+
+	drawer.Release("Res/bomb.png");
+
+	slider1.Release("Res/Slider01.png");
+	slider2.Release("Res/Slider01.png");
+
 	m_State = SceneState::INIT;
 	return SceneID::TITLE;
 }

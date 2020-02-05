@@ -89,6 +89,9 @@ public:
 	*/
 	void DrawFont(Vec2 pos_, std::string text_);
 
+
+	void Release(std::string file_name_);
+
 private:
 
 	void DrawSetting(float x_, float y_, float z_); //!< @brief DirectXのデバイス や 行列情報の初期化

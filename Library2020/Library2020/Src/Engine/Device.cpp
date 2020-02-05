@@ -50,7 +50,7 @@ LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, 
 	// マウスボタンクリック開始時
 	case WM_LBUTTONDOWN:  // 左
 
-		if (++timer >= 1.f) {
+		if (++timer >= 1) {
 			is_click = true;
 			pt.end.x = pt.start.x;
 			pt.end.y = pt.start.y;
@@ -115,7 +115,7 @@ namespace Device{
 			name_.c_str(),										// クラス名									
 			NULL												// 小さいアイコン
 		};
-
+		
 		// 構造体の登録
 		if (RegisterClassEx(&window_class) == 0)
 		{

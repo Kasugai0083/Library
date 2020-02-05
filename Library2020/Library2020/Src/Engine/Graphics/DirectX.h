@@ -91,16 +91,27 @@ public:
 
 protected:
 
-	DXStatus m_DXStatus; //!< @brief DirectX の周辺情報を保管
+	DXStatus m_DXStatus;		//!< @brief DirectX の周辺情報を保管
 
 	D3DXMATRIX m_MatProj, m_MatView; //!< @brief 視点情報行列
 
-	LPD3DXFONT m_Font; //!< フォントの情報
+	LPD3DXFONT m_Font;			//!< フォントの情報
+
+	D3DXVECTOR3 camera_pos;		//!< カメラ位置
+	D3DXVECTOR3 eye_pos;		//!< 注視点
+	D3DXVECTOR3 up_vector;		//!< カメラの向き
+
 
 private:
 	friend Singleton<DXManager>;
 
-	DXManager() { m_Font = nullptr; };
+	DXManager() :
+		camera_pos(0.f, 0.f, -10.f),
+		eye_pos(0.0f, 0.0f, 0.0f),
+		up_vector(0.0f, 1.0f, 0.0f)
+	{ 
+		m_Font = nullptr; 
+	};
 	virtual ~DXManager() {};
 
 	DXManager(const DXManager&) = delete;

@@ -25,7 +25,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	SceneController* s_Controller = SceneController::GetInstance();
 
 
-	if (!Device::MakeWindow(600,600,"後期課題：エンジンテスト")) {
+	if (!Device::MakeWindow(1680,920,"後期課題：エンジンテスト")) {
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
 	}
 	s_Controller->Init(SceneID::TITLE);

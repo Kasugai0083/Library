@@ -12,8 +12,8 @@ class ResultScene :public SceneBase
 public:
 	//!< コンストラクタ
 	ResultScene() : 
-		slider1(-5.f, 5.f, 0.f, Direction::LeftToRight),
-		slider2(-20.f, 2.5f, 0.f, Direction::RightToLeft)
+		slider1(5.f, 5.f, 0.f, Direction::LeftToRight),
+		slider2(0.f, 0.f, 0.f, Direction::RightToLeft)
 	{}
 	~ResultScene()override;		//!< デストラクタ
 private:

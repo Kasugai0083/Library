@@ -28,7 +28,7 @@ void XFileDrawer::Draw(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_,
 
 	Trans(pos_,scale_,angle_);
 
-	world_matrix *= scale_matrix * trans_matrix * rot_matrix * view_matrix;
+	world_matrix = scale_matrix * trans_matrix * rot_matrix * view_matrix;
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
 
@@ -46,7 +46,7 @@ void XFileDrawer::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3
 
 	HandMade::BillBoard(&view_matrix, Ins_DXManager->GetViewMatrix());
 
-	world_matrix *= scale_matrix * trans_matrix * rot_matrix * view_matrix;
+	world_matrix = scale_matrix * trans_matrix * rot_matrix * view_matrix;
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
 

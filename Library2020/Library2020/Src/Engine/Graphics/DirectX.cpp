@@ -1,5 +1,6 @@
 #include "DirectX.h"
 #include "HandMade.h"
+#include "..//Device.h"
 #include <Windows.h>
 
 bool DXManager::InitDirectX(HWND window_handle)
@@ -66,29 +67,39 @@ bool DXManager::InitDirectX(HWND window_handle)
 
 void DXManager::Transform()
 {
-	//ビュー座標変換用の行列算出 start
-
-	D3DXVECTOR3 camera_pos(0.f, 0.f, -10.f); // カメラ位置
-	D3DXVECTOR3 eye_pos(0.0f, 0.0f, 0.0f);		// 注視点
-	D3DXVECTOR3 up_vector(0.0f, 1.0f, 0.0f);	// カメラの向き
 	
+	// キー入力でカメラの移動 start
+	if (Device::KeyOn(VK_RIGHT)) { eye_pos.x += 0.1f; }
+	if (Device::KeyOn(VK_LEFT)) { eye_pos.x -= 0.1f; }
+	if (Device::KeyOn(VK_UP)) { eye_pos.y += 0.1f; }
+	if (Device::KeyOn(VK_DOWN)) { eye_pos.y -= 0.1f; }
+	// キー入力でカメラの移動 end
+
+	// キー入力でカメラの移動 start
+	if (Device::KeyOn('D')) { camera_pos.x += 0.1f; eye_pos.x += 0.1f; }
+	if (Device::KeyOn('A')) { camera_pos.x -= 0.1f; eye_pos.x -= 0.1f; }
+	if (Device::KeyOn('W')) { camera_pos.y += 0.1f; eye_pos.y += 0.1f; }
+	if (Device::KeyOn('S')) { camera_pos.y -= 0.1f; eye_pos.y -= 0.1f; }
+	// キー入力でカメラの移動 end
+
 	// カメラの移動
-	static float test = 1.f;
+	//static float test = 1.f;
 
-	test++;
+	//test++;
 
-	float rad = test * 3.14f / 180.f;
-	float distance = 10.0f;
-	D3DXVECTOR3 vec = D3DXVECTOR3(
-		sinf(rad) * distance,
-		0.0f,
-		-cosf(rad) * distance
-	);
+	//float rad = test * 3.14f / 180.f;
+	//float distance = 10.0f;
+	//D3DXVECTOR3 vec = D3DXVECTOR3(
+	//	sinf(rad) * distance,
+	//	0.0f,
+	//	-cosf(rad) * distance
+	//);
 
-	camera_pos.z += vec.z;
-	camera_pos.x += vec.x;
+	//camera_pos.z += vec.z;
+	//camera_pos.x += vec.x;
 	//カメラの移動 end
 
+	//ビュー座標変換用の行列算出 start
 	D3DXMatrixIdentity(&m_MatView);
 	D3DXMatrixLookAtLH(&m_MatView, 
 		&camera_pos,				// カメラ座標

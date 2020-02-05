@@ -15,10 +15,7 @@ void GameScene::Init()
 void GameScene::Update() {
 	Gridman.UpdateLineManager();
 
-	static int count = 0;
-	if (Device::HasClickOnMouse()) {
-		m_State = SceneState::END;
-	}
+	if (Device::HasClickOnMouse()) { m_State = SceneState::END; }
 }
 
 SceneID GameScene::End() {

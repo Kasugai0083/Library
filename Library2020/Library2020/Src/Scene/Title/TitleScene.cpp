@@ -19,15 +19,12 @@ void TitleScene::Init() {
 }
 
 void TitleScene::Update() {
-	if (Device::KeyPress('A')) {
-		m_State = SceneState::END;
-	}
+
+	if (Device::HasClickOnMouse()) { m_State = SceneState::END; }
 }
 
 SceneID TitleScene::End() {
-
 	Object.ReleaseXFile();
-
 	//	èIóπèàóù
 	m_State = SceneState::INIT;
 	return SceneID::GAME;

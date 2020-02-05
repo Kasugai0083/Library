@@ -50,6 +50,8 @@ public:
 	*/
 	void DrawSlider(std::string file_name_);
 
+	void Release(std::string file_name_) {	InsDrawer.Release(file_name_); }
+
 private:
 	/**
 	* @brief Update() “à‚Åg—p‚³‚ê‚éŠÖ”
