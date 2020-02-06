@@ -1,8 +1,8 @@
-#include "XFileDrawer.h"
+#include "Drawer3D.h"
 #include "XFile.h"
 #include "HandMade.h"
 
-void XFileDrawer::Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_) {
+void Drawer3D::Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_) {
 
 	D3DXMatrixIdentity(&world_matrix);
 	D3DXMatrixIdentity(&rot_matrix);
@@ -19,7 +19,7 @@ void XFileDrawer::Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_
 
 }
 
-void XFileDrawer::Draw(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_)
+void Drawer3D::DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_)
 {
 
 	DXManager* Ins_DXManager = DXManager::GetInstance();
@@ -36,7 +36,7 @@ void XFileDrawer::Draw(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_,
 
 }
 
-void XFileDrawer::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_)
+void Drawer3D::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_)
 {
 	DXManager* Ins_DXManager = DXManager::GetInstance();
 
@@ -54,7 +54,7 @@ void XFileDrawer::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3
 
 }
 
-bool XFileDrawer::Load(std::string name_) {
+bool Drawer3D::LoadXFile(std::string name_) {
 	m_pXFileList[name_] = new XFile;
 	m_pXFileList[name_]->Load(name_);
 

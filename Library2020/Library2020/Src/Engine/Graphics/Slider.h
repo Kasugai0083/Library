@@ -44,7 +44,7 @@ public:
 	/**
 	* @brief Drawer2Dを用いて画像を読み込み
 	*/
-	void Load(std::string file_name_) {	InsDrawer.Load(file_name_);}
+	void Load(std::string file_name_) {	InsDrawer.LoadTexture(file_name_);}
 
 	/**
 	* @brief スライダーの更新\n

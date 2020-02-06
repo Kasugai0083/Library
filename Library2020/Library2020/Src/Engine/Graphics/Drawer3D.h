@@ -12,7 +12,7 @@
 
 class XFile;
 
-class XFileDrawer
+class Drawer3D
 {
 public:
 
@@ -23,7 +23,7 @@ public:
 	* @param angle_  オブジェクトの回転
 	* @param name_  オブジェクトの名前
 	*/
-	void Draw(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_);
+	void DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_);
 
 	/**
 	* @brief XFile をビルボードを適用して描画する
@@ -38,7 +38,7 @@ public:
 	* @brief XFile を読み込む
 	* @param name_ XFile の名前を指定
 	*/
-	bool Load(std::string name_);
+	bool LoadXFile(std::string name_);
 
 	/**
 	* @brief 読み込んだ XFile を解放

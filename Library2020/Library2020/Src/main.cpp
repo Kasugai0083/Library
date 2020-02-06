@@ -1,7 +1,7 @@
 
 #include "Engine/Graphics/DirectX.h"
 #include "Engine/Graphics/XFile.h"
-#include "Engine/Graphics/XFileDrawer.h"
+#include "Engine/Graphics/Drawer3D.h"
 #include "Engine/Device.h"
 #include "Engine/Graphics/Drawer2D.h"
 #include "Engine/Graphics/Slider.h"
@@ -37,7 +37,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		Device::KeyUpdate();
 
-#if 1
+#if 0
 		 //2D•`‰æ
 		s_DXManager->StartDraw2D();
 #else

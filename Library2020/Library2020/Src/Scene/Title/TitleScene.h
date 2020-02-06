@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../SceneBase.h"
-#include "../../Engine/Graphics/XFileDrawer.h"
+#include "../../Engine/Graphics/Drawer3D.h"
 
 /**
 * @brief
@@ -23,6 +23,6 @@ private:
 private:
 
 	Drawer2D drawer;		//!< フォント表示に使用
-	XFileDrawer Object;		//!< XFileの描画に使用
+	Drawer3D Object;		//!< XFileの描画に使用
 };
 

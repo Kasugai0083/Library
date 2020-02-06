@@ -11,7 +11,7 @@ TitleScene::~TitleScene()
 
 void TitleScene::Init() {
 
-	if (!Object.Load("Res/Sample01.x")) {
+	if (!Object.LoadXFile("Res/Sample01.x")) {
 		MessageBox(NULL, "XFileÇÃì«Ç›çûÇ›Ç…é∏îs", NULL, MB_OK);
 	}
 
@@ -50,7 +50,7 @@ void TitleScene::Draw() {
 	drawer.DrawFont(font_pos, "XFileÇï\é¶");
 
 	// XFileÇÃï`âÊ(ê≥ñ )
-	Object.Draw(
+	Object.DrawXFile(
 		D3DXVECTOR3(0.f, 0.f, 0.f),
 		D3DXVECTOR3(1.f, 1.f, 1.f),
 		D3DXVECTOR3(20.f, 20.f, 20.f),

@@ -68,7 +68,7 @@ public:
 	* 読み込みに失敗した場合、エラーメッセージを返す
 	* @param file_name_ 要素番号を指定
 	*/
-	void Load(std::string file_name_) {
+	void LoadTexture(std::string file_name_) {
 		if (!CreateTexture(file_name_)) {
 			std::string msg = " の読み込みに失敗";
 			std::string pop_msg = file_name_ + msg;

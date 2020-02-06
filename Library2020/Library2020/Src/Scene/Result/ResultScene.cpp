@@ -6,7 +6,7 @@ ResultScene::~ResultScene()
 }
 
 void ResultScene::Init() {
-	drawer.Load("Res/bomb.png");
+	drawer.LoadTexture("Res/bomb.png");
 
 	slider1.Load("Res/Slider01.png");
 	slider2.Load("Res/Slider01.png");
