@@ -22,7 +22,7 @@ private:
 	void Draw()override;	//!< シーンの描画
 private:
 
-	Drawer2D drawer;		//!< フォント表示に使用
-	Drawer3D Object;		//!< XFileの描画に使用
+	Drawer2D drawer2d;		//!< フォント表示に使用
+	Drawer3D drawer3d;		//!< XFileの描画に使用
 };
 

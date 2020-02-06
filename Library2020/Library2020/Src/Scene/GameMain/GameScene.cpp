@@ -40,9 +40,9 @@ SceneID GameScene::Control() {
 
 void GameScene::Draw() {
 	Vec2 font_pos(0.f, 0.f);
-	drawer.DrawFont(font_pos, "‹Èü‚ğ•\¦");
+	drawer2d.DrawFont(font_pos, "‹Èü‚ğ•\¦");
 
-	Gridman.DrawLine();
+	Gridman.DrawLine(Dimendion::DIMENSION_3);
 
 }
 

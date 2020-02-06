@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Drawer2D.h"
+#include "Drawer3D.h"
 #include <string>
 
 /**
@@ -44,7 +45,7 @@ public:
 	/**
 	* @brief Drawer2Dを用いて画像を読み込み
 	*/
-	void Load(std::string file_name_) {	InsDrawer.LoadTexture(file_name_);}
+	void Load(std::string file_name_) {	drawer2d.LoadTexture(file_name_);}
 
 	/**
 	* @brief スライダーの更新\n
@@ -52,14 +53,20 @@ public:
 	*/
 	void Update();
 
-	/**
-	* @brief スライダーを描画する
-	*/
-	void DrawSlider(std::string file_name_);
+	void DrawSlider(std::string file_name_, Dimendion dim_);
 
-	void Release(std::string file_name_) {	InsDrawer.Release(file_name_); }
+	void Release(std::string file_name_) {	drawer2d.Release(file_name_); }
 
 private:
+	/**
+	* @brief 2D空間にスライダーを描画する
+	*/
+	void DrawSlider2d(std::string file_name_);
+	/**
+	* @brief 3D空間にスライダーを描画する
+	*/
+	void DrawSlider3d(std::string file_name_);
+
 	/**
 	* @brief Update() 内で使用される関数
 	*/
@@ -82,7 +89,8 @@ private:
 
 	Direction Dir;			//!< @brief 進行方向
 
-	Drawer2D InsDrawer;		//!< @brief 描画用の関数を呼び出す
+	Drawer2D drawer2d;		//!< @brief 描画用の関数を呼び出す
+	Drawer3D drawer3d;		//!< @brief 描画用の関数を呼び出す
 
 };
 

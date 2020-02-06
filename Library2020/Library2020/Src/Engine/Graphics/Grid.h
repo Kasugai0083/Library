@@ -2,6 +2,7 @@
 
 #include "../../Utility/Vec3.h"
 #include "Drawer2D.h"
+#include "Drawer3D.h"
 #include <d3dx9.h>
 #include <vector>
 
@@ -63,6 +64,8 @@ struct LineDesc
 	float m_Alpha;
 };
 
+//class Drawer3D;
+
 class LineDrawer {
 public:
 
@@ -101,7 +104,7 @@ public:
 	/**
 	* @brief 曲線の描画
 	*/
-	void DrawLine();
+	void DrawLine(Dimendion dim_);
 
 private:
 	void UpdateLine(); 	//!< @brief m_Counter を減算する
@@ -109,6 +112,7 @@ private:
 private:
 	LineManager m_LineManager;	//!< @brief 曲線の情報を管理
 
-	Drawer2D m_Drawer;			//!< @brief 描画関数を呼び出すために使用
+	Drawer2D drawer2d;			//!< @brief 描画関数を呼び出すために使用
+	Drawer3D drawer3d;			//!< @brief 描画関数を呼び出すために使用
 
 };

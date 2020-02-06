@@ -13,7 +13,7 @@ public:
 	//!< コンストラクタ
 	ResultScene() : 
 		slider1(5.f, 5.f, 0.f, Direction::LeftToRight),
-		slider2(0.f, 0.f, 0.f, Direction::RightToLeft)
+		slider2(0.f, 0.f, 10.f, Direction::RightToLeft)
 	{}
 	~ResultScene()override;		//!< デストラクタ
 private:
@@ -23,7 +23,8 @@ private:
 	SceneID Control()override;	//!< シーンの制御
 	void Draw()override;		//!< シーンの描画
 private:
-	Drawer2D drawer;			//!< フォント表示に使用
+	Drawer2D drawer2d;			//!< フォント表示に使用
+	Drawer3D drawer3d;			//!< フォント表示に使用
 	
 	//!< スライダーの描画に使用
 	Slider slider1;				

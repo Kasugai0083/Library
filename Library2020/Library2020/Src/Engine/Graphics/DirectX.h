@@ -3,6 +3,8 @@
 
 #include "../../Utility/SingletonTemplate.h"
 #include "..//..//Utility/Size.h"
+#include "../../Utility/Vec3.h"
+#include "../../Utility/Vec2.h"
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <map>
@@ -12,6 +14,48 @@
 * @brief 
 * DirectXを初期化・管理するクラス
 */
+
+/**
+* Texture のデータとサイズを管理する構造体
+*/
+struct Texture {
+	LPDIRECT3DTEXTURE9 TexutreData;		//!< テクスチャデータ
+	float Width;						//!< 横幅
+	float Height;						//!< 縦幅
+};
+
+/**
+* @brief ポリゴン描画に必要な頂点情報
+* @param pos 座標
+* @param tex_pos テクスチャ座標
+*/
+struct CustomVertex {
+
+	D3DXVECTOR3 pos;
+	D3DXVECTOR2 tex_pos;
+
+};
+
+/**
+* @brief ポリゴン描画に必要な頂点情報
+* @param pos 座標
+* @param tex_pos_start テクスチャ座標開始点
+* @param tex_pos_end テクスチャ座標終了点
+*/
+struct VertexPos {
+
+	Pos3 pos;
+	Pos2 tex_pos_start, tex_pos_end;
+
+};
+
+/**
+* @enum 各描画関数の描画次元をしていするのに使用
+*/
+enum class Dimendion {
+	DIMENSION_2,
+	DIMENSION_3,
+};
 
 /**
 * @brief DirextXステータス構造体\n

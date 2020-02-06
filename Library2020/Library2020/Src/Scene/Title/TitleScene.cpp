@@ -11,7 +11,7 @@ TitleScene::~TitleScene()
 
 void TitleScene::Init() {
 
-	if (!Object.LoadXFile("Res/Sample01.x")) {
+	if (!drawer3d.LoadXFile("Res/Sample01.x")) {
 		MessageBox(NULL, "XFileの読み込みに失敗", NULL, MB_OK);
 	}
 
@@ -24,7 +24,7 @@ void TitleScene::Update() {
 }
 
 SceneID TitleScene::End() {
-	Object.ReleaseXFile();
+	drawer3d.ReleaseXFile();
 	//	終了処理
 	m_State = SceneState::INIT;
 	return SceneID::GAME;
@@ -47,10 +47,10 @@ SceneID TitleScene::Control() {
 
 void TitleScene::Draw() {
 	Vec2 font_pos(0.f, 0.f);
-	drawer.DrawFont(font_pos, "XFileを表示");
+	drawer2d.DrawFont(font_pos, "XFileを表示");
 
 	// XFileの描画(正面)
-	Object.DrawXFile(
+	drawer3d.DrawXFile(
 		D3DXVECTOR3(0.f, 0.f, 0.f),
 		D3DXVECTOR3(1.f, 1.f, 1.f),
 		D3DXVECTOR3(20.f, 20.f, 20.f),
@@ -59,7 +59,7 @@ void TitleScene::Draw() {
 
 
 	// XFileの描画(右上)
-	Object.DrawBillbord(
+	drawer3d.DrawBillbord(
 		D3DXVECTOR3(5.f, 5.f, 0.f),
 		D3DXVECTOR3(1.f, 1.f, 1.f),
 		D3DXVECTOR3(20.f, 20.f, 20.f),

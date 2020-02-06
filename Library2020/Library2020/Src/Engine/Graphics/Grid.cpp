@@ -67,7 +67,7 @@ void LineDrawer::UpdateLineManager() {
 	UpdateLine();
 }
 
-void LineDrawer::DrawLine() {
+void LineDrawer::DrawLine(Dimendion dim_) {
 	if (m_LineManager.m_Line.size() <= 2)
 	{
 		return;
@@ -133,6 +133,6 @@ void LineDrawer::DrawLine() {
 		}
 	}
 
-	m_Drawer.DrawLine(desc_list);
-
+	if (dim_ == Dimendion::DIMENSION_2) { drawer2d.DrawLine(desc_list); }
+	else if(dim_ == Dimendion::DIMENSION_3) { drawer3d.DrawLine(desc_list); };
 }
