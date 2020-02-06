@@ -12,7 +12,7 @@ TitleScene::~TitleScene()
 void TitleScene::Init() {
 
 	if (!Object.Load("Res/Sample01.x")) {
-		MessageBox(NULL, "‰æ‘œ‚Ì“Ç‚İ‚İ‚É¸”s1", NULL, MB_OK);
+		MessageBox(NULL, "XFile‚Ì“Ç‚İ‚İ‚É¸”s", NULL, MB_OK);
 	}
 
 	m_State = SceneState::UPDATE;

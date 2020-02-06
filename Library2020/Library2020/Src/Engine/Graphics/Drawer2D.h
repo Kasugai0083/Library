@@ -69,6 +69,18 @@ public:
 	bool CreateTexture(std::string file_name_);
 
 	/**
+	* テスト中！
+	*/
+	void Load(std::string file_name_) {
+		if (!CreateTexture(file_name_)) {
+			std::string msg = " の読み込みに失敗";
+			std::string pop_msg = file_name_ + msg;
+
+			MessageBox(NULL, pop_msg.c_str(), NULL, MB_OK);
+		}
+	}
+
+	/**
 	* @brief 曲線の描画
 	* @param 曲線の頂点情報
 	*/
@@ -89,7 +101,10 @@ public:
 	*/
 	void DrawFont(Vec2 pos_, std::string text_);
 
-
+	/**
+	* @brief 指定したテクスチャ領域を解放
+	* @param 領域を指定
+	*/
 	void Release(std::string file_name_);
 
 private:

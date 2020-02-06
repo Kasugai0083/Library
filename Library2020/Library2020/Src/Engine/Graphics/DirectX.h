@@ -39,15 +39,6 @@ public:
 	*/
 	bool InitDirectX(HWND window_handle);
 
-	/**
-	* @brief カメラ情報を初期化
-	*/
-	void Transform();
-
-	/**
-	* @brief DirectXでの描画情報を初期化
-	*/
-	void StartDraw();
 
 	void StartDraw2D();
 	void StartDraw3D();
@@ -57,10 +48,7 @@ public:
 	*/
 	void EndDraw();
 
-	/**
-	* @brief 光源の設定
-	*/
-	void SetLighting();
+
 
 	/**
 	* @brief フォントのデバイスを作成
@@ -91,6 +79,19 @@ public:
 	LPD3DXFONT& GetFont() {
 		return m_Font;
 	}
+protected:
+	/**
+	* @brief カメラ情報を初期化
+	*/
+	void Transform();
+	/**
+	* @brief DirectXでの描画情報を初期化
+	*/
+	void StartDraw();
+	/**
+	* @brief 光源の設定
+	*/
+	void SetLighting();
 
 protected:
 

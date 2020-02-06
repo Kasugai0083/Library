@@ -37,7 +37,14 @@ public:
 		NextValue(100.f),
 		MoveSpeed(0.f),
 		Dir(dir_)
-	{}
+	{
+
+	}
+
+	/**
+	* テスト中！
+	*/
+	void Load(std::string file_name_) {	InsDrawer.Load(file_name_);}
 
 	/**
 	* @brief スライダーの更新\n
