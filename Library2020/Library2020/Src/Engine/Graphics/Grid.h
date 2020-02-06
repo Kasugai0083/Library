@@ -2,9 +2,9 @@
 
 #include "../../Utility/Vec3.h"
 #include "Drawer2D.h"
-#include "Drawer3D.h"
 #include <d3dx9.h>
 #include <vector>
+#include "Drawer3D.h"
 
 /*
 	E‹Èü‚Ì•`‰æ
@@ -64,7 +64,7 @@ struct LineDesc
 	float m_Alpha;
 };
 
-//class Drawer3D;
+class Drawer3D;
 
 class LineDrawer {
 public:

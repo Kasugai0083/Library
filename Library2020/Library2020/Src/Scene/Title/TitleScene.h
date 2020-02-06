@@ -2,6 +2,7 @@
 
 #include "../SceneBase.h"
 #include "../../Engine/Graphics/Drawer3D.h"
+#include "../../Engine/Graphics/Drawer2D.h"
 
 /**
 * @brief

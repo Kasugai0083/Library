@@ -2,7 +2,6 @@
 
 #include "DirectX.h"
 #include "XFile.h"
-#include "Grid.h"
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <string>
@@ -13,6 +12,7 @@
 * XFile ‚ð•`‰æ‚·‚éƒNƒ‰ƒX
 */
 
+struct LineDesc;
 
 class Drawer3D
 {
