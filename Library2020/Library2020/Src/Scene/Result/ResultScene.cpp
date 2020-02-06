@@ -59,6 +59,6 @@ void ResultScene::Draw() {
 	}
 
 	slider1.DrawSlider("Res/Slider01.png", Dimendion::DIMENSION_2);
-	slider2.DrawSlider("Res/Slider01.png", Dimendion::DIMENSION_3);
+	slider2.DrawSlider("Res/Slider01.png", Dimendion::DIMENSION_2);
 
 }

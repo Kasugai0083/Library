@@ -1,4 +1,6 @@
-
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
 #include "Engine/Graphics/DirectX.h"
 #include "Engine/Graphics/XFile.h"
 #include "Engine/Graphics/Drawer3D.h"
@@ -13,8 +15,14 @@
 #include <d3dx9.h>
 #include <map>
 
+
+#define new  ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
+
+
 int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 {
+
+
 	//DirectXƒVƒ“ƒOƒ‹ƒgƒ“ì¬
 	DXManager::CreateInstance();
 	DXManager* s_DXManager = DXManager::GetInstance();
@@ -37,7 +45,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		Device::KeyUpdate();
 
-#if 0
+#if 1
 		 //2D•`‰æ
 		s_DXManager->StartDraw2D();
 #else
@@ -53,7 +61,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		s_Controller->Draw();
 
 		s_DXManager->EndDraw();
-		
+
+		_CrtDumpMemoryLeaks();
 	}
 
 

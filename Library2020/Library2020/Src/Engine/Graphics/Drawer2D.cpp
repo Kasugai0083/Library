@@ -4,47 +4,10 @@
 #include "Grid.h"
 #include <vector>
 
-void Drawer2D::DrawSetting(float x_, float y_, float z_) {
-	// DirectX のインスタンス化
-	DXManager* Ins_DXManager = DXManager::GetInstance();
-	if (!Ins_DXManager) { return; }
-
-	// ワールド, 移動, 拡縮行列を用意
-	D3DXMATRIXA16 world, trans, scale, rot;
-	D3DXMatrixIdentity(&world);
-	D3DXMatrixIdentity(&rot);
-
-	// 拡縮
-	// 1 / 100 スケールでないとでかすぎてヤバイ！
-	HandMade::Scaling(&scale, 0.01f, 0.01f, 0.01f);
-
-	// 移動
-	D3DXMatrixTranslation(&trans, x_, y_, z_);
-
-	// ビルボード化
-	HandMade::BillBoard(&world, Ins_DXManager->GetViewMatrix());
-
-	// 拡縮と移動行列を反映
-	world *= scale * rot * trans;
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world);
-
-	// ライティング
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
-
-	// カルモード(板の裏っかわも描画)
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
-	
-
-}
-
 void Drawer2D::DrawTexture(VertexPos v_, std::string file_name_)
 {
 	DXManager* Ins_DXManager = DXManager::GetInstance();
 	if (!Ins_DXManager) { return; }
-
-	DrawSetting(v_.pos.X, v_.pos.Y, v_.pos.Z);
 
 	float left_tu = 0.f;
 	float right_tu = 1.f;
@@ -62,15 +25,19 @@ void Drawer2D::DrawTexture(VertexPos v_, std::string file_name_)
 	// ここの値も正常
 	CustomVertex v[] =
 	{
-		{ D3DXVECTOR3(v_.tex_pos_start.X, v_.tex_pos_start.Y + v_.tex_pos_end.Y, 0.0f), D3DXVECTOR2(left_tu, top_tv) },						// 左上
-		{ D3DXVECTOR3(v_.tex_pos_start.X + v_.tex_pos_end.X, v_.tex_pos_start.Y + v_.tex_pos_end.Y, 0.0f), D3DXVECTOR2(right_tu, top_tv) }, // 右上
-		{ D3DXVECTOR3(v_.tex_pos_start.X + v_.tex_pos_end.X, v_.tex_pos_start.Y, 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },					// 右下
-		{ D3DXVECTOR3(v_.tex_pos_start.X, v_.tex_pos_start.Y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },										// 左下
+		{ D3DXVECTOR3(v_.tex_pos_start.X, v_.tex_pos_start.Y, 0.0f), D3DXVECTOR2(left_tu, top_tv) },															// 左上
+		{ D3DXVECTOR3(v_.tex_pos_start.X + v_.tex_pos_end.X, v_.tex_pos_start.Y, 0.0f), D3DXVECTOR2(right_tu, top_tv) },										// 右上
+		{ D3DXVECTOR3(v_.tex_pos_start.X + v_.tex_pos_end.X, v_.tex_pos_start.Y + v_.tex_pos_end.Y, 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },					// 右下
+		{ D3DXVECTOR3(v_.tex_pos_start.X, v_.tex_pos_start.Y + v_.tex_pos_end.Y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },										// 左下
 	};
 
 	if (m_TextureList[file_name_]) {
 		Ins_DXManager->GetStatus()->m_D3DDevice->SetTexture(0, m_TextureList[file_name_]->TexutreData);
 	}
+	// ライティング
+	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
+
+	Ins_DXManager->GetStatus()->m_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(CustomVertex));
 }
@@ -81,8 +48,6 @@ void Drawer2D::DrawLine(std::vector<LineDesc> desc_list)
 	// DirectX のインスタンス化
 	DXManager* Ins_DXManager = DXManager::GetInstance();
 	if (!Ins_DXManager) { return; }
-
-	DrawSetting(desc_list[0].m_Pos.X, desc_list[0].m_Pos.Y, desc_list[0].m_Pos.Z);
 
 	struct LineVertex
 	{
@@ -109,13 +74,16 @@ void Drawer2D::DrawLine(std::vector<LineDesc> desc_list)
 		{
 			desc_list[i].m_Pos.X,
 			desc_list[i].m_Pos.Y,
-			desc_list[i].m_Pos.Z,
+			0.f,
 			1.0f,
 			color
 		};
 
 		vertex_list.push_back(new_vertex);
 	}
+	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
+
+	Ins_DXManager->GetStatus()->m_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
 
 	Ins_DXManager->GetStatus()->m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, vertex_list.size() - 2, &vertex_list[0], sizeof(LineVertex));
 }
@@ -197,7 +165,7 @@ void Drawer2D::DrawFont(Vec2 pos_,std::string text_) {
 
 void Drawer2D::Release(std::string file_name_) {
 
-	delete m_TextureList[file_name_];
+	delete[] m_TextureList[file_name_];
 
 	m_TextureList.clear();
 }
