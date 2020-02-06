@@ -3,6 +3,19 @@
 #include "..//Device.h"
 #include <Windows.h>
 
+void DXManager::StartDraw2D()
+{
+	StartDraw();
+	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+}
+
+void DXManager::StartDraw3D()
+{
+	StartDraw();
+	Transform();
+	SetLighting();
+}
+
 bool DXManager::InitDirectX(HWND window_handle)
 {
 	// インターフェース作成
@@ -26,6 +39,12 @@ bool DXManager::InitDirectX(HWND window_handle)
 	m_DXStatus.m_pD3DPresentParam->BackBufferFormat = D3DFMT_UNKNOWN;
 	// ウィンドウモード設定 => 定数で切り替え
 	m_DXStatus.m_pD3DPresentParam->Windowed = true;
+	//横の解像度
+	m_DXStatus.m_pD3DPresentParam->BackBufferWidth = WIN_W;
+	//縦の解像度
+	m_DXStatus.m_pD3DPresentParam->BackBufferHeight = WIN_H;
+	//フルスクリーンのリフレッシュレート
+	m_DXStatus.m_pD3DPresentParam->FullScreen_RefreshRateInHz = 0.f;
 
 	// スワップエフェクト設定 => ディスプレイドライバ依存
 	// スワップエフェクト => バックバッファとフロントバッファへの切り替え方法
@@ -138,19 +157,6 @@ void DXManager::StartDraw() {
 	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	m_DXStatus.m_D3DDevice->BeginScene();
-}
-
-void DXManager::StartDraw2D()
-{
-	StartDraw();
-	m_DXStatus.m_D3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-}
-
-void DXManager::StartDraw3D()
-{
-	StartDraw();
-	Transform();
-	SetLighting();
 }
 
 void DXManager::EndDraw() {

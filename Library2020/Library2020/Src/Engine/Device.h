@@ -8,6 +8,9 @@
 * @brief ウィンドウとマウス制御する関数群
 */
 
+const int WIN_W = 1024;
+const int WIN_H = 720;
+
 namespace Device{
 	
 	/**

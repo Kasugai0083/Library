@@ -42,7 +42,7 @@ public:
 	}
 
 	/**
-	* テスト中！
+	* @brief Drawer2Dを用いて画像を読み込み
 	*/
 	void Load(std::string file_name_) {	InsDrawer.Load(file_name_);}
 

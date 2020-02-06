@@ -156,7 +156,7 @@
     <ClCompile Include="Src\Engine\Graphics\HandMade.cpp" />
     <ClCompile Include="Src\Engine\Graphics\Slider.cpp" />
     <ClCompile Include="Src\Engine\Graphics\XFile.cpp" />
-    <ClCompile Include="Src\Engine\Graphics\XFileDrawer.cpp" />
+    <ClCompile Include="Src\Engine\Graphics\Drawer3D.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Scene\GameMain\GameScene.cpp" />
     <ClCompile Include="Src\Scene\Result\ResultScene.cpp" />
@@ -171,7 +171,7 @@
     <ClInclude Include="Src\Engine\Graphics\HandMade.h" />
     <ClInclude Include="Src\Engine\Graphics\Slider.h" />
     <ClInclude Include="Src\Engine\Graphics\XFile.h" />
-    <ClInclude Include="Src\Engine\Graphics\XFileDrawer.h" />
+    <ClInclude Include="Src\Engine\Graphics\Drawer3D.h" />
     <ClInclude Include="Src\Scene\GameMain\GameScene.h" />
     <ClInclude Include="Src\Scene\Result\ResultScene.h" />
     <ClInclude Include="Src\Scene\SceneBase.h" />

@@ -62,14 +62,11 @@ public:
 	*/
 	void DrawTexture(VertexPos v_, std::string file_name_);
 
-	/**
-	* @brief m_TextureList にテクスチャ情報を入力
-	* @param file_name_ 要素番号を指定
-	*/
-	bool CreateTexture(std::string file_name_);
 
 	/**
-	* テスト中！
+	* @brief m_TextureList にテクスチャ情報を入力\n
+	* 読み込みに失敗した場合、エラーメッセージを返す
+	* @param file_name_ 要素番号を指定
 	*/
 	void Load(std::string file_name_) {
 		if (!CreateTexture(file_name_)) {
@@ -108,6 +105,11 @@ public:
 	void Release(std::string file_name_);
 
 private:
+	/**
+	* @brief m_TextureList にテクスチャ情報を入力
+	* @param file_name_ 要素番号を指定
+	*/
+	bool CreateTexture(std::string file_name_);
 
 	void DrawSetting(float x_, float y_, float z_); //!< @brief DirectXのデバイス や 行列情報の初期化
 

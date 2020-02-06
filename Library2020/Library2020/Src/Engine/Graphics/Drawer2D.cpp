@@ -58,6 +58,8 @@ void Drawer2D::DrawTexture(VertexPos v_, std::string file_name_)
 		bottom_tv = (v_.tex_pos_start.Y + v_.tex_pos_end.Y) / m_TextureList[file_name_]->Height;
 	}
 
+	// デカイポリゴン問題
+	// ここの値も正常
 	CustomVertex v[] =
 	{
 		{ D3DXVECTOR3(v_.tex_pos_start.X, v_.tex_pos_start.Y + v_.tex_pos_end.Y, 0.0f), D3DXVECTOR2(left_tu, top_tv) },						// 左上
@@ -159,6 +161,8 @@ bool Drawer2D::CreateTexture(std::string file_name_)
 			m_TextureList[file_name_]->TexutreData->Release();
 			return false;
 		}
+		// デカいポリゴン問題
+		// ここでは想定内の値が入っている
 		m_TextureList[file_name_]->Width = (float)desc.Width;
 		m_TextureList[file_name_]->Height = (float)desc.Height;
 	}

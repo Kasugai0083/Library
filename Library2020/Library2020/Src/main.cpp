@@ -25,7 +25,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	SceneController* s_Controller = SceneController::GetInstance();
 
 
-	if (!Device::MakeWindow(1024,720,"エンジンテスト")) {
+	if (!Device::MakeWindow(WIN_W,WIN_H,"エンジンテスト")) {
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
 	}
 	s_Controller->Init(SceneID::TITLE);
@@ -37,7 +37,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		Device::KeyUpdate();
 
-#if 0
+#if 1
 		 //2D描画
 		s_DXManager->StartDraw2D();
 #else

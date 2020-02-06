@@ -60,7 +60,7 @@ void TitleScene::Draw() {
 
 	// XFileÇÃï`âÊ(âEè„)
 	Object.DrawBillbord(
-		D3DXVECTOR3(5.f, 5.f, 5.f),
+		D3DXVECTOR3(5.f, 5.f, 0.f),
 		D3DXVECTOR3(1.f, 1.f, 1.f),
 		D3DXVECTOR3(20.f, 20.f, 20.f),
 		"Res/Sample01.x"
