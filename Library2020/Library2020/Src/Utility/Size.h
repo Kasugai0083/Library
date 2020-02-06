@@ -10,13 +10,13 @@
 //=====================================================================//
 //! サイズデータ用構造体
 //=====================================================================//
-struct Size
+struct t_Size
 {
 	/** Constructor */
-	Size()
+	t_Size()
 	{
-		Width = 0.0f;
-		Height = 0.0f;
+		width = 0.0f;
+		height = 0.0f;
 	}
 
 	/**
@@ -24,24 +24,24 @@ struct Size
 	* @param[in] width 横幅
 	* @param[in] height 縦幅
 	*/
-	Size(float width, float height)
+	t_Size(float width_, float height_)
 	{
-		Width = width;
-		Height = height;
+		width = width_;
+		height = height_;
 	}
 
 	/**
 	* @brief Constructor
 	* @param[in] size コピー用サイズデータ
 	*/
-	Size(const Size& size)
+	t_Size(const t_Size& size)
 	{
-		this->Width = size.Width;
-		this->Height = size.Height;
+		this->width = size.width;
+		this->height = size.height;
 	}
 
-	float Width;		//!< 横幅
-	float Height;		//!< 縦幅
+	float width;		//!< 横幅
+	float height;		//!< 縦幅
 };
 
 #endif

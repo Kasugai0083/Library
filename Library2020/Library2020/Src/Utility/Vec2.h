@@ -8,13 +8,13 @@
 //=====================================================================//
 //! Vector用構造体(2D版)
 //=====================================================================//
-typedef struct Vec2
+typedef struct t_Vec2
 {
 	/** Constructor */
-	Vec2()
+	t_Vec2()
 	{
-		X = 0.0f;
-		Y = 0.0f;
+		x = 0.0f;
+		y = 0.0f;
 	}
 
 	/**
@@ -22,22 +22,22 @@ typedef struct Vec2
 	* @param[in] x 横幅
 	* @param[in] y 縦幅
 	*/
-	Vec2(float x, float y)
+	t_Vec2(float x, float y)
 	{
-		X = x;
-		Y = y;
+		x = x;
+		y = y;
 	}
 
 	/**
 	* @brief Constructor
 	* @param[in] Vec2 コピー用Vec2データ
 	*/
-	Vec2(const Vec2& size)
+	t_Vec2(const t_Vec2& size)
 	{
-		this->X = size.X;
-		this->Y = size.Y;
+		this->x = size.x;
+		this->y = size.y;
 	}
 
-	float X;	//!< X値
-	float Y;	//!< Y値
+	float x;	//!< X値
+	float y;	//!< Y値
 }Pos2;

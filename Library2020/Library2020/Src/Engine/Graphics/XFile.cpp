@@ -4,7 +4,7 @@
 bool XFile::Load(std::string file_name)
 {
 	// DirectX
-	DXManager* Ins_DXManager = DXManager::GetInstance();
+	DxManager* Ins_DXManager = DxManager::GetInstance();
 
 	if (!Ins_DXManager) { return false; }
 
@@ -14,7 +14,7 @@ bool XFile::Load(std::string file_name)
 	if (FAILED(D3DXLoadMeshFromXA(
 		file_name.c_str(),
 		D3DXMESH_SYSTEMMEM,
-		Ins_DXManager->GetStatus()->m_D3DDevice,
+		Ins_DXManager->GetStatus()->d3d_device,
 		NULL,
 		&p_material_buffer,
 		NULL,
@@ -42,7 +42,7 @@ bool XFile::Load(std::string file_name)
 			LPDIRECT3DTEXTURE9 texture = NULL;
 			if(m_TextureList[file_name] == NULL)
 			{
-				D3DXCreateTextureFromFileA(Ins_DXManager->GetStatus()->m_D3DDevice,
+				D3DXCreateTextureFromFileA(Ins_DXManager->GetStatus()->d3d_device,
 											file_name.c_str(),
 											&m_TextureList[file_name]);
 			}
@@ -89,15 +89,15 @@ XFile::~XFile()
 
 void XFile::Draw()
 {
-	DXManager* Ins_DXManager = DXManager::GetInstance();
+	DxManager* Ins_DXManager = DxManager::GetInstance();
 
 	if (!Ins_DXManager) { return; }
 
 	for(DWORD i = 0; i < m_MaterialNum; i++)
 	{
-		Ins_DXManager->GetStatus()->m_D3DDevice->SetMaterial(&m_pMeshMaterialList[i]);
+		Ins_DXManager->GetStatus()->d3d_device->SetMaterial(&m_pMeshMaterialList[i]);
 
-		Ins_DXManager->GetStatus()->m_D3DDevice->SetTexture(0, m_pTextureList[i]);
+		Ins_DXManager->GetStatus()->d3d_device->SetTexture(0, m_pTextureList[i]);
 
 		m_pMesh->DrawSubset(i);
 	}

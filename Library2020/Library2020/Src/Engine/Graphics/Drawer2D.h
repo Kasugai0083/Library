@@ -15,7 +15,7 @@
 * 2Dポリゴン用の画像を保存・描画するクラス
 */
 
-struct LineDesc;
+struct t_LineDesc;
 
 class Drawer2D
 {
@@ -26,7 +26,7 @@ public:
 	* @param v_ ポリゴンの頂点情報 と テクスチャの座標情報
 	* @param file_name_ m_TextureList の要素
 	*/
-	void DrawTexture(VertexPos v_, std::string file_name_);
+	void DrawTexture(t_VertexPos v_, std::string fileName_);
 
 
 	/**
@@ -34,10 +34,10 @@ public:
 	* 読み込みに失敗した場合、エラーメッセージを返す
 	* @param file_name_ 要素番号を指定
 	*/
-	void LoadTexture(std::string file_name_) {
-		if (!CreateTexture(file_name_)) {
+	void LoadTexture(std::string fileName_) {
+		if (!CreateTexture(fileName_)) {
 			std::string msg = " の読み込みに失敗";
-			std::string pop_msg = file_name_ + msg;
+			std::string pop_msg = fileName_ + msg;
 
 			MessageBox(NULL, pop_msg.c_str(), NULL, MB_OK);
 		}
@@ -47,13 +47,13 @@ public:
 	* @brief 曲線の描画
 	* @param 曲線の頂点情報
 	*/
-	void DrawLine(std::vector<LineDesc> desc_list);
+	void DrawLine(std::vector<t_LineDesc> descList_);
 
 	/**
 	* @brief テクスチャ情報を取得
 	* @return テクスチャ情報のポインタを返す
 	*/
-	Texture* GetTexture(std::string file_name_) { return m_TextureList[file_name_]; }
+	t_Texture* GetTexture(std::string fileName_) { return m_texture_list[fileName_]; }
 
 
 	/**
@@ -62,25 +62,23 @@ public:
 	* @param pos_ テキストの座標
 	* @param text_ テキストの内容
 	*/
-	void DrawFont(Vec2 pos_, std::string text_);
+	void DrawFont(t_Vec2 pos_, std::string text_);
 
 	/**
 	* @brief 指定したテクスチャ領域を解放
 	* @param 領域を指定
 	*/
-	void Release(std::string file_name_);
+	void Release(std::string fileName_);
 
 private:
 	/**
 	* @brief m_TextureList にテクスチャ情報を入力
 	* @param file_name_ 要素番号を指定
 	*/
-	bool CreateTexture(std::string file_name_);
-
-	void DrawSetting(float x_, float y_, float z_); //!< @brief DirectXのデバイス や 行列情報の初期化
+	bool CreateTexture(std::string fileName_);
 
 private:
 
-	std::map<std::string, Texture*>m_TextureList; //!< @brief 画像情報を保管
+	std::map<std::string, t_Texture*>m_texture_list; //!< @brief 画像情報を保管
 
 };

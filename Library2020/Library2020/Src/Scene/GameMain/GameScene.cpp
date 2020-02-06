@@ -39,7 +39,7 @@ SceneID GameScene::Control() {
 }
 
 void GameScene::Draw() {
-	Vec2 font_pos(0.f, 0.f);
+	t_Vec2 font_pos(0.f, 0.f);
 	drawer2d.DrawFont(font_pos, "ã»ê¸Çï\é¶");
 
 	Gridman.DrawLine(Dimendion::DIMENSION_3);

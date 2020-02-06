@@ -56,13 +56,13 @@ namespace Device{
 	* @brief 現在のマウス座標を取得？
 	* @return マウスの X座標 と Y座標 を返す
 	*/
-	Vec2 GetMousePoint();
+	t_Vec2 GetMousePoint();
 
 	/**
 	* @brief クリック中のマウス座標を取得？
 	* @return マウスの X座標 と Y座標 を返す
 	*/
-	Vec2 GetPointOnDrag();
+	t_Vec2 GetPointOnDrag();
 
 	/**
 	* @brief マウスがクリックされたかどうかを判定

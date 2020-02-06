@@ -97,7 +97,7 @@ LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, 
 namespace Device{
 	bool MakeWindow(int x_, int y_, std::string name_) {
 
-		DXManager* Ins_DXManager = DXManager::GetInstance();
+		DxManager* Ins_DXManager = DxManager::GetInstance();
 
 
 		HWND hWnd;
@@ -188,14 +188,14 @@ namespace Device{
 		return !KeyTest(key[KB_CUR][nVirtKey]) && KeyTest(key[1][nVirtKey]);
 	}
 
-	Vec2 GetMousePoint() {
+	t_Vec2 GetMousePoint() {
 
-		Vec2 vec(((float)pt.end.x),((float)pt.end.y));
+		t_Vec2 vec(((float)pt.end.x),((float)pt.end.y));
 		return vec;
 	}
 
-	Vec2 GetPointOnDrag() {
-		Vec2 vec(((float)pt.start.x), ((float)pt.start.y));
+	t_Vec2 GetPointOnDrag() {
+		t_Vec2 vec(((float)pt.start.x), ((float)pt.start.y));
 		return vec;
 	}
 	

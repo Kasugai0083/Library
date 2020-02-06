@@ -58,7 +58,7 @@ struct LineManager
 /**
 * @brief ü‚ÌˆÊ’uî•ñ‚ÆFÊ”Z“x‚ğ•Û‘¶
 */
-struct LineDesc 
+struct t_LineDesc 
 {
 	Vec3 m_Pos;
 	float m_Alpha;

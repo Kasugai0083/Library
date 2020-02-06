@@ -73,7 +73,7 @@ void LineDrawer::DrawLine(Dimendion dim_) {
 		return;
 	}
 
-	std::vector<LineDesc> desc_list;
+	std::vector<t_LineDesc> desc_list;
 
 	for (int i = 0; i < (int)m_LineManager.m_Line.size() - 1; i++)
 	{
@@ -120,7 +120,7 @@ void LineDrawer::DrawLine(Dimendion dim_) {
 
 			// alpha F‚Ì”Z“x
 			float alpha = (float)m_LineManager.m_Line[i].m_Counter / 120.0f;
-			LineDesc new_desc =
+			t_LineDesc new_desc =
 			{
 				new_pos,
 

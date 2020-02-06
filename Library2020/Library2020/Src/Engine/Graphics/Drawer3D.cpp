@@ -7,63 +7,102 @@
 * XFile関連の関数
 */
 
-void Drawer3D::Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_) {
+#pragma region 座標変換関数
 
-	D3DXMatrixIdentity(&world_matrix);
-	D3DXMatrixIdentity(&rot_matrix);
-	D3DXMatrixIdentity(&view_matrix);
+namespace Transrate{
 
-	HandMade::Translation(&trans_matrix, pos_.x, pos_.y, pos_.z);
-	HandMade::Scaling(&scale_matrix, scale_.x, scale_.y, scale_.z);
+	DxManager* mgr = DxManager::GetInstance();
 
-	HandMade::RotationX(&rot_matrix_x, D3DXToRadian(angle_.x));
-	HandMade::RotationY(&rot_matrix_y, D3DXToRadian(angle_.y));
-	HandMade::RotationZ(&rot_matrix_z, D3DXToRadian(angle_.z));
+	void TransNormal(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_) {
 
-	rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
+
+		D3DXMATRIX world_matrix, trans_matrix, view_matrix; 				//!< @brief 座標系の行列
+
+		D3DXMATRIX rot_matrix_x, rot_matrix_y, rot_matrix_z, rot_matrix; 	//!< @brief 回転行列
+
+		D3DXMATRIX scale_matrix; 											//!< @brief 拡縮行列
+
+		D3DXMatrixIdentity(&world_matrix);
+		D3DXMatrixIdentity(&rot_matrix);
+		D3DXMatrixIdentity(&view_matrix);
+
+		HandMade::Translation(&trans_matrix, pos_.x, pos_.y, pos_.z);
+		HandMade::Scaling(&scale_matrix, scale_.x, scale_.y, scale_.z);
+
+		HandMade::RotationX(&rot_matrix_x, D3DXToRadian(angle_.x));
+		HandMade::RotationY(&rot_matrix_y, D3DXToRadian(angle_.y));
+		HandMade::RotationZ(&rot_matrix_z, D3DXToRadian(angle_.z));
+
+		rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
+
+		world_matrix = scale_matrix * trans_matrix * rot_matrix * view_matrix;
+
+		mgr->GetStatus()->d3d_device->SetTransform(D3DTS_WORLD, &world_matrix);
+
+	}
+
+	void TransBillboard(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_) {
+
+		D3DXMATRIX world_matrix, trans_matrix, view_matrix; 				//!< @brief 座標系の行列
+
+		D3DXMATRIX rot_matrix_x, rot_matrix_y, rot_matrix_z, rot_matrix; 	//!< @brief 回転行列
+
+		D3DXMATRIX scale_matrix; 											//!< @brief 拡縮行列
+
+		D3DXMatrixIdentity(&world_matrix);
+		D3DXMatrixIdentity(&rot_matrix);
+		D3DXMatrixIdentity(&view_matrix);
+
+		HandMade::Translation(&trans_matrix, pos_.x, pos_.y, pos_.z);
+		HandMade::Scaling(&scale_matrix, scale_.x, scale_.y, scale_.z);
+
+		HandMade::RotationX(&rot_matrix_x, D3DXToRadian(angle_.x));
+		HandMade::RotationY(&rot_matrix_y, D3DXToRadian(angle_.y));
+		HandMade::RotationZ(&rot_matrix_z, D3DXToRadian(angle_.z));
+
+		rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
+
+		HandMade::BillBoard(&view_matrix, mgr->GetViewMatrix());
+
+		world_matrix = scale_matrix * trans_matrix * rot_matrix * view_matrix;
+
+		mgr->GetStatus()->d3d_device->SetTransform(D3DTS_WORLD, &world_matrix);
+	}
 
 }
+#pragma endregion
 
-void Drawer3D::DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_)
+void Drawer3D::DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string fileName_)
 {
 
-	DXManager* Ins_DXManager = DXManager::GetInstance();
+	DxManager* mgr = DxManager::GetInstance();
 
-	if (!Ins_DXManager) { return; }
+	if (!mgr) { return; }
 
-	Trans(pos_,scale_,angle_);
+	Transrate::TransNormal(pos_,scale_,angle_);
 
-	world_matrix = scale_matrix * trans_matrix * rot_matrix * view_matrix;
 
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
-
-	if (m_pXFileList[name_]) { m_pXFileList[name_]->Draw(); }
+	if (m_pXFileList[fileName_]) { m_pXFileList[fileName_]->Draw(); }
 
 }
 
-void Drawer3D::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string name_)
+void Drawer3D::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string fileName_)
 {
-	DXManager* Ins_DXManager = DXManager::GetInstance();
+	DxManager* mgr = DxManager::GetInstance();
 
-	if (!Ins_DXManager) { return; }
+	if (!mgr) { return; }
 
-	Trans(pos_, scale_, angle_);
+	Transrate::TransBillboard(pos_, scale_, angle_);
 
-	HandMade::BillBoard(&view_matrix, Ins_DXManager->GetViewMatrix());
-
-	world_matrix = scale_matrix * trans_matrix * rot_matrix * view_matrix;
-
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world_matrix);
-
-	if (m_pXFileList[name_]) { m_pXFileList[name_]->Draw(); }
+	if (m_pXFileList[fileName_]) { m_pXFileList[fileName_]->Draw(); }
 
 }
 
-bool Drawer3D::LoadXFile(std::string name_) {
-	m_pXFileList[name_] = new XFile;
-	m_pXFileList[name_]->Load(name_);
+bool Drawer3D::LoadXFile(std::string fileName_) {
+	m_pXFileList[fileName_] = new XFile;
+	m_pXFileList[fileName_]->Load(fileName_);
 
-	if (m_pXFileList[name_]) { return true; }
+	if (m_pXFileList[fileName_]) { return true; }
 	
 	return false;
 }
@@ -75,43 +114,43 @@ bool Drawer3D::LoadXFile(std::string name_) {
 
 void Drawer3D::DrawSetting(float x_, float y_, float z_) {
 	// DirectX のインスタンス化
-	DXManager* Ins_DXManager = DXManager::GetInstance();
-	if (!Ins_DXManager) { return; }
+	DxManager* mgr = DxManager::GetInstance();
+	if (!mgr) { return; }
 
 	// ワールド, 移動, 拡縮行列を用意
-	D3DXMATRIXA16 world, trans, scale, rot;
-	D3DXMatrixIdentity(&world);
-	D3DXMatrixIdentity(&rot);
+	D3DXMATRIXA16 world_matrix, trans_matrix, scale_matrix, rot_matrix;
+	D3DXMatrixIdentity(&world_matrix);
+	D3DXMatrixIdentity(&rot_matrix);
 
 	// 拡縮
 	// 1 / 100 スケールでないとでかすぎてヤバイ！
-	HandMade::Scaling(&scale, 0.01f, 0.01f, 0.01f);
+	HandMade::Scaling(&scale_matrix, 0.01f, 0.01f, 0.01f);
 
 	// 移動
-	D3DXMatrixTranslation(&trans, x_, y_, z_);
+	D3DXMatrixTranslation(&trans_matrix, x_, y_, z_);
 
 	// ビルボード化
-	HandMade::BillBoard(&world, Ins_DXManager->GetViewMatrix());
+	HandMade::BillBoard(&world_matrix, mgr->GetViewMatrix());
 
 	// 拡縮と移動行列を反映
-	world *= scale * rot * trans;
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetTransform(D3DTS_WORLD, &world);
+	world_matrix *= scale_matrix * rot_matrix * trans_matrix;
+	mgr->GetStatus()->d3d_device->SetTransform(D3DTS_WORLD, &world_matrix);
 
 	// ライティング
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
+	mgr->GetStatus()->d3d_device->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
 
 	// カルモード(板の裏っかわも描画)
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	mgr->GetStatus()->d3d_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	Ins_DXManager->GetStatus()->m_D3DDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
+	mgr->GetStatus()->d3d_device->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
 
 
 }
 
-void Drawer3D::DrawTexture(VertexPos v_, std::string file_name_)
+void Drawer3D::DrawTexture(t_VertexPos v_, std::string fileName_)
 {
-	DXManager* Ins_DXManager = DXManager::GetInstance();
-	if (!Ins_DXManager) { return; }
+	DxManager* mgr = DxManager::GetInstance();
+	if (!mgr) { return; }
 
 	DrawSetting(v_.pos.X, v_.pos.Y, v_.pos.Z);
 
@@ -120,38 +159,38 @@ void Drawer3D::DrawTexture(VertexPos v_, std::string file_name_)
 	float top_tv = 0.f;
 	float bottom_tv = 1.f;
 
-	if (m_TextureList[file_name_] != nullptr) {
-		left_tu = v_.tex_pos_start.X / m_TextureList[file_name_]->Width;
-		right_tu = (v_.tex_pos_start.X + v_.tex_pos_end.X) / m_TextureList[file_name_]->Width;
-		top_tv = v_.tex_pos_start.Y / m_TextureList[file_name_]->Height;
-		bottom_tv = (v_.tex_pos_start.Y + v_.tex_pos_end.Y) / m_TextureList[file_name_]->Height;
+	if (m_TextureList[fileName_] != nullptr) {
+		left_tu = v_.tex_pos_start.x / m_TextureList[fileName_]->width;
+		right_tu = (v_.tex_pos_start.x + v_.tex_pos_end.x) / m_TextureList[fileName_]->width;
+		top_tv = v_.tex_pos_start.y / m_TextureList[fileName_]->height;
+		bottom_tv = (v_.tex_pos_start.y + v_.tex_pos_end.y) / m_TextureList[fileName_]->height;
 	}
 
 	// デカイポリゴン問題
 	// ここの値も正常
-	CustomVertex v[] =
+	t_CustomVertex v[] =
 	{
-		{ D3DXVECTOR3(v_.tex_pos_start.X, v_.tex_pos_start.Y + v_.tex_pos_end.Y, 0.0f), D3DXVECTOR2(left_tu, top_tv) },						// 左上
-		{ D3DXVECTOR3(v_.tex_pos_start.X + v_.tex_pos_end.X, v_.tex_pos_start.Y + v_.tex_pos_end.Y, 0.0f), D3DXVECTOR2(right_tu, top_tv) }, // 右上
-		{ D3DXVECTOR3(v_.tex_pos_start.X + v_.tex_pos_end.X, v_.tex_pos_start.Y, 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },					// 右下
-		{ D3DXVECTOR3(v_.tex_pos_start.X, v_.tex_pos_start.Y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },										// 左下
+		{ D3DXVECTOR3(v_.tex_pos_start.x, v_.tex_pos_start.y + v_.tex_pos_end.y, 0.0f), D3DXVECTOR2(left_tu, top_tv) },						// 左上
+		{ D3DXVECTOR3(v_.tex_pos_start.x + v_.tex_pos_end.x, v_.tex_pos_start.y + v_.tex_pos_end.y, 0.0f), D3DXVECTOR2(right_tu, top_tv) }, // 右上
+		{ D3DXVECTOR3(v_.tex_pos_start.x + v_.tex_pos_end.x, v_.tex_pos_start.y, 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },					// 右下
+		{ D3DXVECTOR3(v_.tex_pos_start.x, v_.tex_pos_start.y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },										// 左下
 	};
 
-	if (m_TextureList[file_name_]) {
-		Ins_DXManager->GetStatus()->m_D3DDevice->SetTexture(0, m_TextureList[file_name_]->TexutreData);
+	if (m_TextureList[fileName_]) {
+		mgr->GetStatus()->d3d_device->SetTexture(0, m_TextureList[fileName_]->texture_data);
 	}
 
-	Ins_DXManager->GetStatus()->m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(CustomVertex));
+	mgr->GetStatus()->d3d_device->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(t_CustomVertex));
 }
 
 // 曲線の描画現在調整中
-void Drawer3D::DrawLine(std::vector<LineDesc> desc_list)
+void Drawer3D::DrawLine(std::vector<t_LineDesc> descList_)
 {
 	// DirectX のインスタンス化
-	DXManager* Ins_DXManager = DXManager::GetInstance();
-	if (!Ins_DXManager) { return; }
+	DxManager* mgr = DxManager::GetInstance();
+	if (!mgr) { return; }
 
-	DrawSetting(desc_list[0].m_Pos.X, desc_list[0].m_Pos.Y, desc_list[0].m_Pos.Z);
+	DrawSetting(descList_[0].m_Pos.X, descList_[0].m_Pos.Y, descList_[0].m_Pos.Z);
 
 	struct LineVertex
 	{
@@ -166,19 +205,19 @@ void Drawer3D::DrawLine(std::vector<LineDesc> desc_list)
 
 	std::vector<LineVertex> vertex_list;
 
-	for (int i = 0; i < (int)desc_list.size(); i++)
+	for (int i = 0; i < (int)descList_.size(); i++)
 	{
 		float tu = 0.0f;
 		float tv = 0.0f;
 
 		// ここの Color の値がおかしい
 		// m_Alpha は想定値
-		DWORD color = D3DCOLOR_ARGB((int)(255 * desc_list[i].m_Alpha), 255, 255, 255);
+		DWORD color = D3DCOLOR_ARGB((int)(255 * descList_[i].m_Alpha), 255, 255, 255);
 		LineVertex new_vertex =
 		{
-			desc_list[i].m_Pos.X,
-			desc_list[i].m_Pos.Y,
-			desc_list[i].m_Pos.Z,
+			descList_[i].m_Pos.X,
+			descList_[i].m_Pos.Y,
+			descList_[i].m_Pos.Z,
 			1.0f,
 			color
 		};
@@ -186,25 +225,25 @@ void Drawer3D::DrawLine(std::vector<LineDesc> desc_list)
 		vertex_list.push_back(new_vertex);
 	}
 
-	Ins_DXManager->GetStatus()->m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, vertex_list.size() - 2, &vertex_list[0], sizeof(LineVertex));
+	mgr->GetStatus()->d3d_device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, vertex_list.size() - 2, &vertex_list[0], sizeof(LineVertex));
 }
 
-bool Drawer3D::CreateTexture(std::string file_name_)
+bool Drawer3D::CreateTexture(std::string fileName_)
 {
-	Size size;
+	t_Size size;
 	D3DXIMAGE_INFO info;
 
-	m_TextureList[file_name_] = new Texture;
+	m_TextureList[fileName_] = new t_Texture;
 
-	DXManager* Ins_DXManager = DXManager::GetInstance();
+	DxManager* mgr = DxManager::GetInstance();
 
-	if (Ins_DXManager == nullptr) { return false; }
+	if (mgr == nullptr) { return false; }
 
 	// 2の累乗じゃないケースを想定して元のサイズを取得してD3DXCreateTextureFromFileExで使う
-	D3DXGetImageInfoFromFileA(file_name_.c_str(), &info);
+	D3DXGetImageInfoFromFileA(fileName_.c_str(), &info);
 
-	if (FAILED(D3DXCreateTextureFromFileExA(Ins_DXManager->GetStatus()->m_D3DDevice,
-		file_name_.c_str(),
+	if (FAILED(D3DXCreateTextureFromFileExA(mgr->GetStatus()->d3d_device,
+		fileName_.c_str(),
 		info.Width,
 		info.Height,
 		1,
@@ -216,7 +255,7 @@ bool Drawer3D::CreateTexture(std::string file_name_)
 		0x0000ff00,
 		nullptr,
 		nullptr,
-		&m_TextureList[file_name_]->TexutreData)))
+		&m_TextureList[fileName_]->texture_data)))
 	{
 		return false;
 	}
@@ -225,23 +264,23 @@ bool Drawer3D::CreateTexture(std::string file_name_)
 		// テクスチャサイズの取得
 		D3DSURFACE_DESC desc;
 
-		if (FAILED(m_TextureList[file_name_]->TexutreData->GetLevelDesc(0, &desc)))
+		if (FAILED(m_TextureList[fileName_]->texture_data->GetLevelDesc(0, &desc)))
 		{
-			m_TextureList[file_name_]->TexutreData->Release();
+			m_TextureList[fileName_]->texture_data->Release();
 			return false;
 		}
 		// デカいポリゴン問題
 		// ここでは想定内の値が入っている
-		m_TextureList[file_name_]->Width = (float)desc.Width;
-		m_TextureList[file_name_]->Height = (float)desc.Height;
+		m_TextureList[fileName_]->width = (float)desc.Width;
+		m_TextureList[fileName_]->height = (float)desc.Height;
 	}
 
 	return true;
 }
 
-void Drawer3D::Release(std::string file_name_) {
+void Drawer3D::Release(std::string fileName_) {
 
-	delete m_TextureList[file_name_];
+	delete m_TextureList[fileName_];
 
 	m_TextureList.clear();
 }

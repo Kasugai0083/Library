@@ -24,8 +24,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 
 	//DirectXシングルトン作成
-	DXManager::CreateInstance();
-	DXManager* s_DXManager = DXManager::GetInstance();
+	DxManager::CreateInstance();
+	DxManager* s_DXManager = DxManager::GetInstance();
 
 
 	// SceneController
@@ -53,7 +53,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		s_DXManager->StartDraw3D();
 #endif
 
-		Size font_size{ 32.f,32.f };
+		t_Size font_size{ 32.f,32.f };
 		s_DXManager->CreateFontDevice(font_size);
 
 		// シーン制御
@@ -69,6 +69,6 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	s_Controller->Release();
 
 	SceneController::DestroyInstance();
-	DXManager::DestroyInstance();
+	DxManager::DestroyInstance();
 
 }
