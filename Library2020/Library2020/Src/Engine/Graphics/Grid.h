@@ -112,7 +112,7 @@ private:
 private:
 	t_LineManager m_line_mgr;	//!< @brief 曲線の情報を管理
 
-	Drawer2D drawer2d;			//!< @brief 描画関数を呼び出すために使用
-	Drawer3D drawer3d;			//!< @brief 描画関数を呼び出すために使用
+	Drawer2D m_drawer2d;			//!< @brief 描画関数を呼び出すために使用
+	Drawer3D m_drawer3d;			//!< @brief 描画関数を呼び出すために使用
 
 };

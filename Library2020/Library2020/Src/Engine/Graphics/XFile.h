@@ -69,7 +69,7 @@ private:
 	/**
 	* @brief XFile ‚Ìî•ñ‚ğ•ÛŠÇ 
 	*/
-	std::map<std::string, XFile*> m_ptr_xfile_list;
+	std::map<std::string, XFile*> m_xfile_list;
 
 };
 

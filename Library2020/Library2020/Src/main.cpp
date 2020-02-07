@@ -25,18 +25,18 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 	//DirectXシングルトン作成
 	DxManager::CreateInstance();
-	DxManager* s_DXManager = DxManager::GetInstance();
+	DxManager* dx_mgr = DxManager::GetInstance();
 
 	// SceneController
 	SceneController::CreateInstance();
-	SceneController* s_Controller = SceneController::GetInstance();
+	SceneController* scene_ctr = SceneController::GetInstance();
 
 
 	if (!Device::MakeWindow(WIN_W,WIN_H,"エンジンテスト")) {
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
 	}
 
-	s_Controller->Init(SceneID::RESULT);
+	scene_ctr->Init(SceneID::RESULT);
 
 
 
@@ -52,24 +52,23 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		s_DXManager->StartDraw2D();
 #else
 		// 3D描画
-		s_DXManager->StartDraw3D();
+		dx_mgr->StartDraw3D();
 #endif
 
 		t_Size font_size{ 32.f,32.f };
-		s_DXManager->CreateFontDevice(font_size);
+		dx_mgr->CreateFontDevice(font_size);
 
 		// シーン制御
-		s_Controller->Update();
-		s_Controller->Draw();
+		scene_ctr->Update();
+		scene_ctr->Draw();
 
-		s_DXManager->EndDraw();
+		dx_mgr->EndDraw();
 
 		_CrtDumpMemoryLeaks();
 
 	}
 
-
-	s_Controller->Release();
+	scene_ctr->Release();
 
 	SceneController::DestroyInstance();
 	DxManager::DestroyInstance();

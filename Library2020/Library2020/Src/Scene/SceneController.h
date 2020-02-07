@@ -16,17 +16,17 @@ public:
 
 	void Release();
 private:
-	std::vector<SceneBase*> m_SceneList;
-	SceneBase* m_CurrScene;
-	SceneID m_SceneID;
+	std::vector<SceneBase*> m_scene_list;
+	SceneBase* m_curr_scene;
+	SceneID m_scene_id;
 private:
 	friend Singleton<SceneController>;
 
 	SceneController() 
 	{ 
-		m_SceneList.clear();
-		m_CurrScene = nullptr;
-		m_SceneID = SceneID::UNKNOWN;
+		m_scene_list.clear();
+		m_curr_scene = nullptr;
+		m_scene_id = SceneID::UNKNOWN;
 	};
 	virtual ~SceneController() {};
 

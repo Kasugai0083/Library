@@ -46,7 +46,7 @@ public:		//!< XFile関連メソッド
 	* @brief 読み込んだ XFile を解放
 	*/
 	void ReleaseXFile() {
-		m_ptr_xfile_list.clear();
+		m_xfile_list.clear();
 	}
 
 public:		//!< ポリゴン関連メソッド
@@ -103,7 +103,7 @@ private:	//!< ポリゴン関連メソッド
 
 private:	//!< XFile関連メンバ変数
 
-	std::map<std::string, XFile*> m_ptr_xfile_list; 						//!< @brief 画像情報をリスト化
+	std::map<std::string, XFile*> m_xfile_list; 						//!< @brief 画像情報をリスト化
 
 private:	//!< ポリゴン関連メンバ変数
 

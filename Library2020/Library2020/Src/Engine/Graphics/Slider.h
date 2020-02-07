@@ -64,7 +64,7 @@ public:
 	/**
 	* @brief Drawer2Dを用いて画像を読み込み
 	*/
-	void Load(std::string fileName_) {	drawer2d.LoadTexture(fileName_);}
+	void Load(std::string fileName_) {	m_drawer2d.LoadTexture(fileName_);}
 
 	/**
 	* @brief スライダーの更新\n
@@ -74,7 +74,7 @@ public:
 
 	void DrawSlider(std::string fileName_, Dimendion dim_);
 
-	void Release(std::string fileName_) {	drawer2d.Release(fileName_); }
+	void Release(std::string fileName_) {	m_drawer2d.Release(fileName_); }
 
 private:
 	/**
@@ -95,8 +95,8 @@ private:
 private:
 	t_SilderState m_slider_sta;
 
-	Drawer2D drawer2d;		//!< @brief 描画用の関数を呼び出す
-	Drawer3D drawer3d;		//!< @brief 描画用の関数を呼び出す
+	Drawer2D m_drawer2d;		//!< @brief 描画用の関数を呼び出す
+	Drawer3D m_drawer3d;		//!< @brief 描画用の関数を呼び出す
 
 };
 

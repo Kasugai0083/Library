@@ -82,7 +82,7 @@ void Drawer3D::DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle
 	TransNormal(pos_,scale_,angle_);
 
 
-	if (m_ptr_xfile_list[fileName_]) { m_ptr_xfile_list[fileName_]->Draw(); }
+	if (m_xfile_list[fileName_]) { m_xfile_list[fileName_]->Draw(); }
 
 }
 
@@ -94,15 +94,15 @@ void Drawer3D::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 an
 
 	TransBillboard(pos_, scale_, angle_);
 
-	if (m_ptr_xfile_list[fileName_]) { m_ptr_xfile_list[fileName_]->Draw(); }
+	if (m_xfile_list[fileName_]) { m_xfile_list[fileName_]->Draw(); }
 
 }
 
 bool Drawer3D::LoadXFile(std::string fileName_) {
-	m_ptr_xfile_list[fileName_] = new XFile;
-	m_ptr_xfile_list[fileName_]->Load(fileName_);
+	m_xfile_list[fileName_] = new XFile;
+	m_xfile_list[fileName_]->Load(fileName_);
 
-	if (m_ptr_xfile_list[fileName_]) { return true; }
+	if (m_xfile_list[fileName_]) { return true; }
 	
 	return false;
 }

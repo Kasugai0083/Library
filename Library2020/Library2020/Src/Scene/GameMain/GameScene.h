@@ -20,7 +20,7 @@ class GameScene : public SceneBase
 public:
 	//!< コンストラクタ
 	GameScene() : 
-		Gridman(start, center, end)
+		m_grid_drawer(start, center, end)
 	{}
 	~GameScene()override;		//!< デストラクタ
 private:
@@ -30,8 +30,8 @@ private:
 	SceneID Control()override;	//!< シーンの制御
 	void Draw()override;		//!< シーンの描画
 private:
-	Drawer2D drawer2d;			//!< フォント表示に使用
-	Drawer3D drawer3d;			//!< フォント表示に使用
-	LineDrawer Gridman;			//!< XFileの描画に使用
+	Drawer2D m_drawer2d;			//!< フォント表示に使用
+	Drawer3D m_drawer3d;			//!< フォント表示に使用
+	LineDrawer m_grid_drawer;			//!< XFileの描画に使用
 };
 

@@ -18,7 +18,7 @@ public:
 
 	//!< コンストラクタ
 	SceneBase() {
-		m_State = SceneState::INIT;
+		m_state = SceneState::INIT;
 	}
 	virtual ~SceneBase() {}	//!< デストラクタ
 
@@ -43,6 +43,6 @@ public:
 
 
 protected:
-	SceneState m_State;
+	SceneState m_state;
 
 };

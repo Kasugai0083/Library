@@ -9,22 +9,22 @@ GameScene::~GameScene()
 void GameScene::Init()
 {
 	// シーン遷移
-	m_State = SceneState::UPDATE;
+	m_state = SceneState::UPDATE;
 }
 
 void GameScene::Update() {
-	Gridman.UpdateLineManager();
+	m_grid_drawer.UpdateLineManager();
 
-	if (Device::HasClickOnMouse()) { m_State = SceneState::END; }
+	if (Device::HasClickOnMouse()) { m_state = SceneState::END; }
 }
 
 SceneID GameScene::End() {
-	m_State = SceneState::INIT;
+	m_state = SceneState::INIT;
 	return SceneID::RESULT;
 }
 
 SceneID GameScene::Control() {
-	switch (m_State)
+	switch (m_state)
 	{
 	case SceneState::INIT:
 		Init();
@@ -40,9 +40,9 @@ SceneID GameScene::Control() {
 
 void GameScene::Draw() {
 	t_Vec2 font_pos(0.f, 0.f);
-	drawer2d.DrawFont(font_pos, "曲線を表示");
+	m_drawer2d.DrawFont(font_pos, "曲線を表示");
 
-	Gridman.DrawLine(Dimendion::DIMENSION_3);
+	m_grid_drawer.DrawLine(Dimendion::DIMENSION_3);
 
 }
 

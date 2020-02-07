@@ -6,26 +6,26 @@ class Singleton
 public:
 	static void CreateInstance()
 	{
-		if (IsNull() == true) { p_Instance = new T(); }
+		if (IsNull() == true) { ptr_instance = new T(); }
 	}
 	static void DestroyInstance()
 	{
-		if(IsNull() == false) {	delete p_Instance; }
+		if(IsNull() == false) {	delete ptr_instance; }
 	}
 	static bool IsNull()
 	{
-		return p_Instance == nullptr;
+		return ptr_instance == nullptr;
 	}
 	static T* GetInstance()
 	{
-		return p_Instance;
+		return ptr_instance;
 	}
 protected:
 	Singleton(){}
 	~Singleton(){}
 private:
-	static T* p_Instance;
+	static T* ptr_instance;
 };
 
 template <class T>
-T* Singleton<T>::p_Instance = nullptr;
+T* Singleton<T>::ptr_instance = nullptr;

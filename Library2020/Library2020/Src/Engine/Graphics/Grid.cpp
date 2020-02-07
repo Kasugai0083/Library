@@ -133,6 +133,6 @@ void LineDrawer::DrawLine(Dimendion dim_) {
 		}
 	}
 
-	if (dim_ == Dimendion::DIMENSION_2) { drawer2d.DrawLine(desc_list); }
-	else if(dim_ == Dimendion::DIMENSION_3) { drawer3d.DrawLine(desc_list); };
+	if (dim_ == Dimendion::DIMENSION_2) { m_drawer2d.DrawLine(desc_list); }
+	else if(dim_ == Dimendion::DIMENSION_3) { m_drawer3d.DrawLine(desc_list); };
 }

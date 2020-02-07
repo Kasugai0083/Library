@@ -11,27 +11,27 @@ TitleScene::~TitleScene()
 
 void TitleScene::Init() {
 
-	//if (!drawer3d.LoadXFile("Res/Sample01.x")) {
+	//if (!m_drawer3d.LoadXFile("Res/Sample01.x")) {
 	//	MessageBox(NULL, "XFileÇÃì«Ç›çûÇ›Ç…é∏îs", NULL, MB_OK);
 	//}
 
-	m_State = SceneState::UPDATE;
+	m_state = SceneState::UPDATE;
 }
 
 void TitleScene::Update() {
 
-	if (Device::HasClickOnMouse()) { m_State = SceneState::END; }
+	if (Device::HasClickOnMouse()) { m_state = SceneState::END; }
 }
 
 SceneID TitleScene::End() {
-	//drawer3d.ReleaseXFile();
+	//m_drawer3d.ReleaseXFile();
 	//	èIóπèàóù
-	m_State = SceneState::INIT;
+	m_state = SceneState::INIT;
 	return SceneID::GAME;
 }
 
 SceneID TitleScene::Control() {
-	switch (m_State)
+	switch (m_state)
 	{
 	case SceneState::INIT:
 		Init();
@@ -47,6 +47,6 @@ SceneID TitleScene::Control() {
 
 void TitleScene::Draw() {
 	t_Vec2 font_pos(0.f, 0.f);
-	drawer2d.DrawFont(font_pos, "XFileÇï\é¶");
+	m_drawer2d.DrawFont(font_pos, "XFileÇï\é¶");
 
 }
