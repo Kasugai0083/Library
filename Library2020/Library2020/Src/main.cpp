@@ -27,7 +27,6 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	DxManager::CreateInstance();
 	DxManager* s_DXManager = DxManager::GetInstance();
 
-
 	// SceneController
 	SceneController::CreateInstance();
 	SceneController* s_Controller = SceneController::GetInstance();
@@ -36,6 +35,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 	if (!Device::MakeWindow(WIN_W,WIN_H,"エンジンテスト")) {
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
 	}
+
 	s_Controller->Init(SceneID::TITLE);
 
 
@@ -45,7 +45,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		Device::KeyUpdate();
 
-#if 1
+#if 0
 		 //2D描画
 		s_DXManager->StartDraw2D();
 #else
@@ -63,6 +63,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		s_DXManager->EndDraw();
 
 		_CrtDumpMemoryLeaks();
+
 	}
 
 

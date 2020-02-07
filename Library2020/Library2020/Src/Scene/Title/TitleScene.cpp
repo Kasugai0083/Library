@@ -49,21 +49,4 @@ void TitleScene::Draw() {
 	t_Vec2 font_pos(0.f, 0.f);
 	drawer2d.DrawFont(font_pos, "XFileÇï\é¶");
 
-	//// XFileÇÃï`âÊ(ê≥ñ )
-	//drawer3d.DrawXFile(
-	//	D3DXVECTOR3(0.f, 0.f, 0.f),
-	//	D3DXVECTOR3(1.f, 1.f, 1.f),
-	//	D3DXVECTOR3(20.f, 20.f, 20.f),
-	//	"Res/Sample01.x"
-	//);
-
-
-	//// XFileÇÃï`âÊ(âEè„)
-	//drawer3d.DrawBillbord(
-	//	D3DXVECTOR3(5.f, 5.f, 0.f),
-	//	D3DXVECTOR3(1.f, 1.f, 1.f),
-	//	D3DXVECTOR3(20.f, 20.f, 20.f),
-	//	"Res/Sample01.x"
-	//);
-
 }

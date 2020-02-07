@@ -141,7 +141,7 @@ bool Drawer2D::CreateTexture(std::string fileName_)
 void Drawer2D::DrawFont(t_Vec2 pos_,std::string text_) {
 
 	DxManager* mgr = DxManager::GetInstance();
-	if (mgr == nullptr) { return; }
+	if (!mgr) { return; }
 
 	RECT rect =
 	{

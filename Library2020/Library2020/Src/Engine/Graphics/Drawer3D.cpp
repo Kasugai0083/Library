@@ -9,67 +9,67 @@
 
 #pragma region ç¿ïWïœä∑ä÷êî
 
-namespace Transrate{
 
+void TransNormal(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_) {
 	DxManager* mgr = DxManager::GetInstance();
+	if (!mgr) { return; }
 
-	void TransNormal(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_) {
+	D3DXMATRIX world_matrix, trans_matrix, view_matrix; 				//!< @brief ç¿ïWånÇÃçsóÒ
 
+	D3DXMATRIX rot_matrix_x, rot_matrix_y, rot_matrix_z, rot_matrix; 	//!< @brief âÒì]çsóÒ
 
-		D3DXMATRIX world_matrix, trans_matrix, view_matrix; 				//!< @brief ç¿ïWånÇÃçsóÒ
+	D3DXMATRIX scale_matrix; 											//!< @brief ägèkçsóÒ
 
-		D3DXMATRIX rot_matrix_x, rot_matrix_y, rot_matrix_z, rot_matrix; 	//!< @brief âÒì]çsóÒ
+	D3DXMatrixIdentity(&world_matrix);
+	D3DXMatrixIdentity(&rot_matrix);
+	D3DXMatrixIdentity(&view_matrix);
 
-		D3DXMATRIX scale_matrix; 											//!< @brief ägèkçsóÒ
+	HandMade::Translation(&trans_matrix, pos_.x, pos_.y, pos_.z);
+	HandMade::Scaling(&scale_matrix, scale_.x, scale_.y, scale_.z);
 
-		D3DXMatrixIdentity(&world_matrix);
-		D3DXMatrixIdentity(&rot_matrix);
-		D3DXMatrixIdentity(&view_matrix);
+	HandMade::RotationX(&rot_matrix_x, D3DXToRadian(angle_.x));
+	HandMade::RotationY(&rot_matrix_y, D3DXToRadian(angle_.y));
+	HandMade::RotationZ(&rot_matrix_z, D3DXToRadian(angle_.z));
 
-		HandMade::Translation(&trans_matrix, pos_.x, pos_.y, pos_.z);
-		HandMade::Scaling(&scale_matrix, scale_.x, scale_.y, scale_.z);
+	rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
 
-		HandMade::RotationX(&rot_matrix_x, D3DXToRadian(angle_.x));
-		HandMade::RotationY(&rot_matrix_y, D3DXToRadian(angle_.y));
-		HandMade::RotationZ(&rot_matrix_z, D3DXToRadian(angle_.z));
+	world_matrix = scale_matrix * trans_matrix * rot_matrix * view_matrix;
 
-		rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
-
-		world_matrix = scale_matrix * trans_matrix * rot_matrix * view_matrix;
-
-		mgr->GetStatus()->d3d_device->SetTransform(D3DTS_WORLD, &world_matrix);
-
-	}
-
-	void TransBillboard(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_) {
-
-		D3DXMATRIX world_matrix, trans_matrix, view_matrix; 				//!< @brief ç¿ïWånÇÃçsóÒ
-
-		D3DXMATRIX rot_matrix_x, rot_matrix_y, rot_matrix_z, rot_matrix; 	//!< @brief âÒì]çsóÒ
-
-		D3DXMATRIX scale_matrix; 											//!< @brief ägèkçsóÒ
-
-		D3DXMatrixIdentity(&world_matrix);
-		D3DXMatrixIdentity(&rot_matrix);
-		D3DXMatrixIdentity(&view_matrix);
-
-		HandMade::Translation(&trans_matrix, pos_.x, pos_.y, pos_.z);
-		HandMade::Scaling(&scale_matrix, scale_.x, scale_.y, scale_.z);
-
-		HandMade::RotationX(&rot_matrix_x, D3DXToRadian(angle_.x));
-		HandMade::RotationY(&rot_matrix_y, D3DXToRadian(angle_.y));
-		HandMade::RotationZ(&rot_matrix_z, D3DXToRadian(angle_.z));
-
-		rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
-
-		HandMade::BillBoard(&view_matrix, mgr->GetViewMatrix());
-
-		world_matrix = scale_matrix * trans_matrix * rot_matrix * view_matrix;
-
-		mgr->GetStatus()->d3d_device->SetTransform(D3DTS_WORLD, &world_matrix);
-	}
+	mgr->GetStatus()->d3d_device->SetTransform(D3DTS_WORLD, &world_matrix);
 
 }
+
+void TransBillboard(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_) {
+
+	DxManager* mgr = DxManager::GetInstance();
+	if (!mgr) { return; }
+
+	D3DXMATRIX world_matrix, trans_matrix, view_matrix; 				//!< @brief ç¿ïWånÇÃçsóÒ
+
+	D3DXMATRIX rot_matrix_x, rot_matrix_y, rot_matrix_z, rot_matrix; 	//!< @brief âÒì]çsóÒ
+
+	D3DXMATRIX scale_matrix; 											//!< @brief ägèkçsóÒ
+
+	D3DXMatrixIdentity(&world_matrix);
+	D3DXMatrixIdentity(&rot_matrix);
+	D3DXMatrixIdentity(&view_matrix);
+
+	HandMade::Translation(&trans_matrix, pos_.x, pos_.y, pos_.z);
+	HandMade::Scaling(&scale_matrix, scale_.x, scale_.y, scale_.z);
+
+	HandMade::RotationX(&rot_matrix_x, D3DXToRadian(angle_.x));
+	HandMade::RotationY(&rot_matrix_y, D3DXToRadian(angle_.y));
+	HandMade::RotationZ(&rot_matrix_z, D3DXToRadian(angle_.z));
+
+	rot_matrix *= rot_matrix_x * rot_matrix_y * rot_matrix_z;
+
+	HandMade::BillBoard(&view_matrix, mgr->GetViewMatrix());
+
+	world_matrix = scale_matrix * trans_matrix * rot_matrix * view_matrix;
+
+	mgr->GetStatus()->d3d_device->SetTransform(D3DTS_WORLD, &world_matrix);
+}
+
 #pragma endregion
 
 void Drawer3D::DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_, std::string fileName_)
@@ -79,7 +79,7 @@ void Drawer3D::DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle
 
 	if (!mgr) { return; }
 
-	Transrate::TransNormal(pos_,scale_,angle_);
+	TransNormal(pos_,scale_,angle_);
 
 
 	if (m_pXFileList[fileName_]) { m_pXFileList[fileName_]->Draw(); }
@@ -92,7 +92,7 @@ void Drawer3D::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 an
 
 	if (!mgr) { return; }
 
-	Transrate::TransBillboard(pos_, scale_, angle_);
+	TransBillboard(pos_, scale_, angle_);
 
 	if (m_pXFileList[fileName_]) { m_pXFileList[fileName_]->Draw(); }
 
