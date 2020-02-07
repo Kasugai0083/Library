@@ -72,8 +72,8 @@ void Drawer2D::DrawLine(std::vector<t_LineDesc> descList_)
 		DWORD color = D3DCOLOR_ARGB((int)(255 * descList_[i].m_Alpha), 255, 255, 255);
 		LineVertex new_vertex =
 		{
-			descList_[i].m_Pos.X,
-			descList_[i].m_Pos.Y,
+			descList_[i].m_Pos.x,
+			descList_[i].m_Pos.y,
 			0.f,
 			1.0f,
 			color
@@ -97,7 +97,7 @@ bool Drawer2D::CreateTexture(std::string fileName_)
 
 	DxManager* mgr = DxManager::GetInstance();
 
-	if (mgr == nullptr) { return false; }
+	if (!mgr) { return false; }
 
 	// 2の累乗じゃないケースを想定して元のサイズを取得してD3DXCreateTextureFromFileExで使う
 	D3DXGetImageInfoFromFileA(fileName_.c_str(), &info);

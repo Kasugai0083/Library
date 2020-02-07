@@ -36,7 +36,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 		MessageBox(NULL,"ウィンドウ作成失敗",NULL, MB_OK);
 	}
 
-	s_Controller->Init(SceneID::TITLE);
+	s_Controller->Init(SceneID::RESULT);
 
 
 

@@ -53,7 +53,7 @@ void ResultScene::Draw() {
 		t_VertexPos v{ Pos3(-5.f,-5.f,0.f),Pos2(0.f,0.f),Pos2(256.f, 256.f) };
 		drawer2d.DrawTexture(v, "Res/bomb.png");
 
-		t_Vec2 font_pos(0.f, 0.f);
+		t_Vec2 font_pos(50.f, 50.f);
 		drawer2d.DrawFont(font_pos, "2Dƒ|ƒŠƒSƒ“‚ð•\Ž¦");
 
 	}

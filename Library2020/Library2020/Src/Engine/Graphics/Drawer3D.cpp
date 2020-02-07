@@ -152,7 +152,7 @@ void Drawer3D::DrawTexture(t_VertexPos v_, std::string fileName_)
 	DxManager* mgr = DxManager::GetInstance();
 	if (!mgr) { return; }
 
-	DrawSetting(v_.pos.X, v_.pos.Y, v_.pos.Z);
+	DrawSetting(v_.pos.x, v_.pos.y, v_.pos.z);
 
 	float left_tu = 0.f;
 	float right_tu = 1.f;
@@ -190,7 +190,7 @@ void Drawer3D::DrawLine(std::vector<t_LineDesc> descList_)
 	DxManager* mgr = DxManager::GetInstance();
 	if (!mgr) { return; }
 
-	DrawSetting(descList_[0].m_Pos.X, descList_[0].m_Pos.Y, descList_[0].m_Pos.Z);
+	DrawSetting(descList_[0].m_Pos.x, descList_[0].m_Pos.y, descList_[0].m_Pos.z);
 
 	struct LineVertex
 	{
@@ -215,9 +215,9 @@ void Drawer3D::DrawLine(std::vector<t_LineDesc> descList_)
 		DWORD color = D3DCOLOR_ARGB((int)(255 * descList_[i].m_Alpha), 255, 255, 255);
 		LineVertex new_vertex =
 		{
-			descList_[i].m_Pos.X,
-			descList_[i].m_Pos.Y,
-			descList_[i].m_Pos.Z,
+			descList_[i].m_Pos.x,
+			descList_[i].m_Pos.y,
+			descList_[i].m_Pos.z,
 			1.0f,
 			color
 		};

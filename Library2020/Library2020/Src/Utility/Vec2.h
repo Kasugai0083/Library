@@ -22,10 +22,10 @@ typedef struct t_Vec2
 	* @param[in] x ‰¡•
 	* @param[in] y c•
 	*/
-	t_Vec2(float x, float y)
+	t_Vec2(float x_, float y_)
 	{
-		x = x;
-		y = y;
+		x = x_;
+		y = y_;
 	}
 
 	/**

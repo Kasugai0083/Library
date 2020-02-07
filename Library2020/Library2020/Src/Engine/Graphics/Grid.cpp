@@ -28,33 +28,33 @@ void LineDrawer::UpdateLineManager() {
 		// 仮説①：始点と中間点、終点を結ぶ曲線の計算をしている
 		// 仮説②：ブレンドする値は始点・中間点・終点といった関わりではなく、
 		//		   曲線の曲がり具合を設定するものである
-		new_pos.X = 
+		new_pos.x = 
 			(1 - percent) 
 			* (1 - percent) 
-			* m_LineManager.m_Start.X + 2 
+			* m_LineManager.m_Start.x + 2 
 			* (1 - percent) 
 			* percent 
-			* m_LineManager.m_Center.X + percent 
+			* m_LineManager.m_Center.x + percent 
 			* percent 
-			* m_LineManager.m_End.X;
+			* m_LineManager.m_End.x;
 
-		new_pos.Y = 
+		new_pos.y = 
 			(1 - percent) 
 			* (1 - percent) 
-			* m_LineManager.m_Start.Y + 2 
+			* m_LineManager.m_Start.y + 2 
 			* (1 - percent) * percent 
-			* m_LineManager.m_Center.Y + percent 
+			* m_LineManager.m_Center.y + percent 
 			* percent 
-			* m_LineManager.m_End.Y;
+			* m_LineManager.m_End.y;
 
-		new_pos.Z = 
+		new_pos.z = 
 			(1 - percent) 
 			* (1 - percent) 
-			* m_LineManager.m_Start.Z + 2 
+			* m_LineManager.m_Start.z + 2 
 			* (1 - percent) * percent 
-			* m_LineManager.m_Center.Z + percent 
+			* m_LineManager.m_Center.z + percent 
 			* percent 
-			* m_LineManager.m_End.Z;
+			* m_LineManager.m_End.z;
 
 		Line new_line =
 		{
@@ -79,9 +79,9 @@ void LineDrawer::DrawLine(Dimendion dim_) {
 	{
 		Vec3 direction = Vec3(
 			// ②.保存されてる座標と次の座標でベクトルを算出する
-			m_LineManager.m_Line[i + 1].m_Pos.X - m_LineManager.m_Line[i].m_Pos.X,
-			m_LineManager.m_Line[i + 1].m_Pos.Y - m_LineManager.m_Line[i].m_Pos.Y,
-			m_LineManager.m_Line[i + 1].m_Pos.Z - m_LineManager.m_Line[i].m_Pos.Z
+			m_LineManager.m_Line[i + 1].m_Pos.x - m_LineManager.m_Line[i].m_Pos.x,
+			m_LineManager.m_Line[i + 1].m_Pos.y - m_LineManager.m_Line[i].m_Pos.y,
+			m_LineManager.m_Line[i + 1].m_Pos.z - m_LineManager.m_Line[i].m_Pos.z
 		);
 
 
@@ -89,34 +89,34 @@ void LineDrawer::DrawLine(Dimendion dim_) {
 		for (int j = 0; j < 2; j++)
 		{
 			// 	③．②のベクトルに対して直角なベクトルを算出する
-			Vec3 normal = Vec3(-direction.Y, direction.X, direction.Z);
+			Vec3 normal = Vec3(-direction.y, direction.x, direction.z);
 
 			if (j == 1)
 			{
 				// ベクトルu と ベクトルv を算出
 				// ⑦．⑤のベクトルを180度回転する
-				normal.X *= -1.0f;
-				normal.Y *= -1.0f;
-				normal.Z *= 1.0f;
+				normal.x *= -1.0f;
+				normal.y *= -1.0f;
+				normal.z *= 1.0f;
 			}
 
 			//	④．③のベクトルを単位ベクトルにする
-			float length = sqrtf(normal.X * normal.X + normal.Y * normal.Y+ normal.Z * normal.Z);
-			normal.X /= length;
-			normal.Y /= length;
-			normal.Z /= length;
+			float length = sqrtf(normal.x * normal.x + normal.y * normal.y+ normal.z * normal.z);
+			normal.x /= length;
+			normal.y /= length;
+			normal.z /= length;
 
 			// ⑤．線の幅 / 2 を④のベクトルに掛ける
 			Vec3 new_pos = Vec3(
-				direction.X + m_LineManager.m_Width / 2.0f * normal.X,
-				direction.Y + m_LineManager.m_Width / 2.0f * normal.Y,
-				direction.Z + m_LineManager.m_Width / 2.0f * normal.Z
+				direction.x + m_LineManager.m_Width / 2.0f * normal.x,
+				direction.y + m_LineManager.m_Width / 2.0f * normal.y,
+				direction.z + m_LineManager.m_Width / 2.0f * normal.z
 			);
 
 			// 	⑥．⑤のベクトルに座標を足した新しい座標を作る
-			new_pos.X += m_LineManager.m_Line[i].m_Pos.X;
-			new_pos.Y += m_LineManager.m_Line[i].m_Pos.Y;
-			new_pos.Z += m_LineManager.m_Line[i].m_Pos.Z;
+			new_pos.x += m_LineManager.m_Line[i].m_Pos.x;
+			new_pos.y += m_LineManager.m_Line[i].m_Pos.y;
+			new_pos.z += m_LineManager.m_Line[i].m_Pos.z;
 
 			// alpha 色の濃度
 			float alpha = (float)m_LineManager.m_Line[i].m_Counter / 120.0f;
