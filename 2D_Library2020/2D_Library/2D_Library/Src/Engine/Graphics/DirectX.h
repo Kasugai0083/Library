@@ -5,6 +5,7 @@
 #include "..//..//Utility/Size.h"
 #include "../../Utility/Vec3.h"
 #include "../../Utility/Vec2.h"
+
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <map>
@@ -68,8 +69,6 @@ struct t_DxStatus
 	D3DPRESENT_PARAMETERS* d3d_present_param; //!< @brief DirectXの設定
 	
 	LPDIRECT3DDEVICE9 d3d_device; //!< @brief DirectXデバイス情報
-	
-	std::map<std::string, LPDIRECT3DTEXTURE9> texture_list; //!< @brief テクスチャリスト
 };
 
 class DxManager : public Singleton<DxManager>
@@ -84,7 +83,8 @@ public:
 	bool InitDirectX(HWND windowHandle_);
 
 	/**
-	* @brief DirectXでの描画情報を初期化
+	* @brief DirectXでの描画情報を初期化\n
+	* !画像バグ：ここは異常なし
 	*/
 	void StartDraw();
 
@@ -92,6 +92,11 @@ public:
 	* @brief DirectXでの描画情報を解放
 	*/
 	void EndDraw();
+
+	/**
+	* @brief DirectXのステータスを解放
+	*/
+	void Release();
 
 	/**
 	* @brief フォントのデバイスを作成
@@ -121,7 +126,7 @@ protected:
 
 	t_DxStatus m_dx_status;		//!< @brief DirectX の周辺情報を保管
 
-	LPD3DXFONT m_font;			//!< フォントの情報
+	LPD3DXFONT m_font;			//!< @brief フォントの情報
 
 private:
 	friend Singleton<DxManager>;

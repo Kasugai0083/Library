@@ -10,6 +10,7 @@
 #include <map>
 #include <vector>
 
+
 /**
 * @brief
 * 2Dポリゴン用の画像を保存・描画するクラス

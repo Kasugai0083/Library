@@ -4,16 +4,19 @@
 
 bool DxManager::InitDirectX(HWND windowHandle_)
 {
-	// インターフェース作成
+	// インターフェース作成 start
+	// ここは大丈夫
 	m_dx_status.d3d_interface = Direct3DCreate9(D3D_SDK_VERSION);
-	if (m_dx_status.d3d_interface == NULL)
+	if (!m_dx_status.d3d_interface)
 	{
 		// 作成失敗
 		return false;
 	}
-	
+	// インターフェース作成 end
+
+	// グラフィックデバイスの作成 start
 	m_dx_status.d3d_present_param = new D3DPRESENT_PARAMETERS;
-	if (m_dx_status.d3d_present_param == NULL)
+	if (!m_dx_status.d3d_present_param)
 	{
 		return false;
 	}
@@ -22,13 +25,13 @@ bool DxManager::InitDirectX(HWND windowHandle_)
 	// バックバッファの数 => 1
 	m_dx_status.d3d_present_param->BackBufferCount = 1;
 	// バックバッファのフォーマット => D3DFMT_UNKNOWN(フォーマットを知りません)
-	m_dx_status.d3d_present_param->BackBufferFormat = D3DFMT_UNKNOWN;
+	m_dx_status.d3d_present_param->BackBufferFormat = D3DFMT_A8R8G8B8;
 	// ウィンドウモード設定 => 定数で切り替え
 	m_dx_status.d3d_present_param->Windowed = true;
 	//横の解像度
-	m_dx_status.d3d_present_param->BackBufferWidth = WIN_W;
+	m_dx_status.d3d_present_param->BackBufferWidth = 1920;
 	//縦の解像度
-	m_dx_status.d3d_present_param->BackBufferHeight = WIN_H;
+	m_dx_status.d3d_present_param->BackBufferHeight = 1080;
 	//フルスクリーンのリフレッシュレート
 	m_dx_status.d3d_present_param->FullScreen_RefreshRateInHz = 0;
 
@@ -46,6 +49,7 @@ bool DxManager::InitDirectX(HWND windowHandle_)
 	{
 		return false;
 	}
+	// グラフィックデバイスの作成 end
 
 	// ビューポートパラメータ
 	D3DVIEWPORT9 view_port;
@@ -71,7 +75,7 @@ bool DxManager::InitDirectX(HWND windowHandle_)
 }
 
 void DxManager::StartDraw() {
-	m_dx_status.d3d_device->Clear(0L,
+	m_dx_status.d3d_device->Clear(0,
 		NULL,
 		D3DCLEAR_TARGET,
 		D3DCOLOR_ARGB(255, 0, 0, 255),
@@ -81,6 +85,8 @@ void DxManager::StartDraw() {
 	m_dx_status.d3d_device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	m_dx_status.d3d_device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_dx_status.d3d_device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	m_dx_status.d3d_device->SetRenderState(D3DRS_ZENABLE, TRUE);
 
 	m_dx_status.d3d_device->SetRenderState(D3DRS_LIGHTING, false);
 
@@ -92,6 +98,13 @@ void DxManager::EndDraw() {
 	m_dx_status.d3d_device->EndScene();
 
 	m_dx_status.d3d_device->Present(NULL, NULL, NULL, NULL);
+}
+
+void DxManager::Release() {
+	m_font->Release();
+	m_dx_status.d3d_device->Release();
+	m_dx_status.d3d_interface->Release();
+	delete[] m_dx_status.d3d_present_param;
 }
 
 bool DxManager::CreateFontDevice(t_Size size_) {

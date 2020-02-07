@@ -87,7 +87,7 @@ LRESULT CALLBACK WindowProc(HWND windowHandle_, UINT messageId_, WPARAM wParam_,
 	case WM_SYSKEYDOWN: // システムキー押下開始時
 	case WM_SYSKEYUP:   // システムキー終了時
 		MessageBox(NULL, "システムキー入力", NULL, MB_OK);
-		return 0;
+		break;
 
 	}
 
@@ -97,7 +97,7 @@ LRESULT CALLBACK WindowProc(HWND windowHandle_, UINT messageId_, WPARAM wParam_,
 namespace Device{
 	bool MakeWindow(int x_, int y_, std::string name_) {
 
-		DxManager* Ins_DXManager = DxManager::GetInstance();
+		DxManager* mgr = DxManager::GetInstance();
 
 
 		HWND hWnd;
@@ -141,7 +141,7 @@ namespace Device{
 			return false;
 		}
 
-		if (!Ins_DXManager->InitDirectX(hWnd))
+		if (!mgr->InitDirectX(hWnd))
 		{
 			return false;
 		}

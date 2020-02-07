@@ -74,8 +74,13 @@ public:
 	* @param center ü‚Ì’†ŠÔ“_
 	* @param end	ü‚ÌI“_
 	*/
+	LineDrawer() {}
 	LineDrawer(Vec3 start_, Vec3 center_,Vec3 end_)
 	{
+		Init(start_,center_,end_);
+	}
+
+	void Init(Vec3 start_, Vec3 center_, Vec3 end_) {
 		// 10.f ‚Å‚µ‚©•`‰æ‚³‚ê‚È‚¢
 		// ’ù³FWidth‚ğã‚°‚é‚Æ‚Ç‚ñ‚Ç‚ñ‚‚¢ˆÊ’u‚Å•`‰æ‚³‚ê‚é
 		// Œ´ˆö‚ğ’T‚é
@@ -104,6 +109,10 @@ public:
 	* @brief ‹Èü‚Ì•`‰æ
 	*/
 	void DrawLine();
+
+	void Release() {
+		m_line_mgr.line.clear();
+	}
 
 private:
 	void UpdateLine(); 	//!< @brief counter ‚ğŒ¸Z‚·‚é

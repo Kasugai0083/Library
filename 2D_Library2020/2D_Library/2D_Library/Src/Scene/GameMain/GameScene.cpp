@@ -1,6 +1,5 @@
 #include "GameScene.h"
 
-
 GameScene::~GameScene()
 {
 }
@@ -8,6 +7,13 @@ GameScene::~GameScene()
 
 void GameScene::Init()
 {
+	//!< 曲線の通過点を指定
+	
+	Vec3 start(-5.f, -1.f, 0.f);
+	Vec3 center(10.f, 2.f, 0.f);
+	Vec3 end(20.f, -2.f, 0.f);
+	
+	m_grid_drawer.Init(start, center, end);
 	// シーン遷移
 	m_state = SceneState::UPDATE;
 }
@@ -20,6 +26,9 @@ void GameScene::Update() {
 
 SceneID GameScene::End() {
 	m_state = SceneState::INIT;
+
+	m_grid_drawer;
+
 	return SceneID::RESULT;
 }
 

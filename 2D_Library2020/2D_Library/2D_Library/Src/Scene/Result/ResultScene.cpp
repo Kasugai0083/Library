@@ -58,7 +58,7 @@ void ResultScene::Draw() {
 
 	}
 
-	m_slider1.DrawSlider("Res/Slider01.png");
-	m_slider2.DrawSlider("Res/Slider01.png");
+	//m_slider1.DrawSlider("Res/Slider01.png");
+	//m_slider2.DrawSlider("Res/Slider01.png");
 
 }

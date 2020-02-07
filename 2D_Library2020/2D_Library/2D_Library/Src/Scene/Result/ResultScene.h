@@ -3,14 +3,15 @@
 #include "../SceneBase.h"
 #include "../../Engine/Graphics/Slider.h"
 
+
 /**
 * @brief
 * リザルトシーンの処理
 */
 
 namespace {
-	Pos3 pos1(5.f, 5.f, 0.f);
-	Pos3 pos2(0.f, 0.f, 10.f);
+	Pos3 pos1(20.f, 50.f, 0.f);
+	Pos3 pos2(50.f, 0.f, 0.f);
 }
 
 class ResultScene :public SceneBase

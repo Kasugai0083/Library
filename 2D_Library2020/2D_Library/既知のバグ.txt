@@ -14,7 +14,7 @@
 	DrawFontの大きさが想定内のサイズで表示されるので、
 	ポリゴンのみサイズがおかしい模様
 	DrawTexture と DrawLine の描画サイズがおかしいため、
-	DrawPrimitiveUp を呼び出す d3d_device が異常値？
+	d3d_device が異常値？
 	また、3次元の座標変換系の関数を全て省いても描画サイズが異常だったため、
 	DirectX.cpp でのデバイス設定、または Drawer2D.cpp での描画設定に異常が
 	あることがほぼ確定であると言える
