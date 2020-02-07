@@ -46,7 +46,7 @@ public:		//!< XFile関連メソッド
 	* @brief 読み込んだ XFile を解放
 	*/
 	void ReleaseXFile() {
-		m_pXFileList.clear();
+		m_ptr_xfile_list.clear();
 	}
 
 public:		//!< ポリゴン関連メソッド
@@ -54,14 +54,14 @@ public:		//!< ポリゴン関連メソッド
 	/**
 	* @brief テクスチャを貼り付けたポリゴンを描画する
 	* @param v_ ポリゴンの頂点情報 と テクスチャの座標情報
-	* @param file_name_ m_TextureList の要素
+	* @param fileName_ m_ptr_tex_list の要素
 	*/
 	void DrawTexture(t_VertexPos v_, std::string fileName_);
 
 	/**
-	* @brief m_TextureList にテクスチャ情報を入力\n
+	* @brief m_ptr_tex_list にテクスチャ情報を入力\n
 	* 読み込みに失敗した場合、エラーメッセージを返す
-	* @param file_name_ 要素番号を指定
+	* @param fileName_ 要素番号を指定
 	*/
 	void LoadTexture(std::string fileName_) {
 		if (!CreateTexture(fileName_)) {
@@ -82,7 +82,7 @@ public:		//!< ポリゴン関連メソッド
 	* @brief テクスチャ情報を取得
 	* @return テクスチャ情報のポインタを返す
 	*/
-	t_Texture* GetTexture(std::string fileName_) { return m_TextureList[fileName_]; }
+	t_Texture* GetTexture(std::string fileName_) { return m_ptr_tex_list[fileName_]; }
 
 
 	/**
@@ -91,21 +91,11 @@ public:		//!< ポリゴン関連メソッド
 	*/
 	void Release(std::string fileName_);
 
-
-
-private:	//!< XFile関連メソッド
-
-	/**
-	* @brief Draw() の内で使用\n
-	* 移動・拡縮・回転を関数を用いて計算する
-	*/
-	void Trans(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle_);
-
 private:	//!< ポリゴン関連メソッド
 
 	/**
-	* @brief m_TextureList にテクスチャ情報を入力
-	* @param file_name_ 要素番号を指定
+	* @brief m_ptr_tex_list にテクスチャ情報を入力
+	* @param fileName_ 要素番号を指定
 	*/
 	bool CreateTexture(std::string fileName_);
 
@@ -113,11 +103,11 @@ private:	//!< ポリゴン関連メソッド
 
 private:	//!< XFile関連メンバ変数
 
-	std::map<std::string, XFile*> m_pXFileList; 						//!< @brief 画像情報をリスト化
+	std::map<std::string, XFile*> m_ptr_xfile_list; 						//!< @brief 画像情報をリスト化
 
 private:	//!< ポリゴン関連メンバ変数
 
-	std::map<std::string, t_Texture*>m_TextureList; //!< @brief 画像情報を保管
+	std::map<std::string, t_Texture*> m_ptr_tex_list; //!< @brief 画像情報を保管
 
 };
 

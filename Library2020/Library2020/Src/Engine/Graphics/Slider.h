@@ -13,8 +13,28 @@
 * @enum 方向を決定する列挙子
 */
 enum class Direction {
-	LeftToRight,
-	RightToLeft
+	LEFT_TO_RIGHT,
+	RIGHT_TO_LEFT
+};
+
+/**
+* @brief スライダーのステータス
+*/
+struct t_SilderState {
+	int count;				//!< @brief 経過フレームを保存
+
+	float x;				//!< @brief スライダー描画位置(X)
+	float y;				//!< @brief スライダー描画位置(Y)
+	float z;				//!< @brief スライダー描画位置(Z)
+
+	float min_value;			//!< @brief 最小値
+	float max_value;			//!< @brief 最大値
+
+	float current_value;		//!< @brief 現在の値
+	float next_value;		//!< @brief 次の値
+	float move_speed;		//!< @brief 移動速度
+
+	Direction dir;			//!< @brief 進行方向
 };
 
 class Slider {
@@ -27,25 +47,24 @@ public:
 	* @param z_ スライダーのZ座標
 	* @param dir_ スライダーの方向
 	*/
-	Slider(float x_, float y_, float z_,Direction dir_) :
-		count(0),
-		X(x_),
-		Y(y_),
-		Z(z_),
-		MinValue(0.f),
-		MaxValue(100.f),
-		CurrentValue(0.f),
-		NextValue(100.f),
-		MoveSpeed(0.f),
-		Dir(dir_)
+	Slider(Pos3 pos_,Direction dir_)
 	{
-
+		m_slider_sta.count = 0;
+		m_slider_sta.x = pos_.x;
+		m_slider_sta.y = pos_.y;
+		m_slider_sta.z = pos_.z;
+		m_slider_sta.min_value = 0.f;
+		m_slider_sta.max_value = 100.f;
+		m_slider_sta.current_value = 0.f;
+		m_slider_sta.next_value = 100.f;
+		m_slider_sta.move_speed = 0.f;
+		m_slider_sta.dir = dir_;
 	}
 
 	/**
 	* @brief Drawer2Dを用いて画像を読み込み
 	*/
-	void Load(std::string file_name_) {	drawer2d.LoadTexture(file_name_);}
+	void Load(std::string fileName_) {	drawer2d.LoadTexture(fileName_);}
 
 	/**
 	* @brief スライダーの更新\n
@@ -53,19 +72,19 @@ public:
 	*/
 	void Update();
 
-	void DrawSlider(std::string file_name_, Dimendion dim_);
+	void DrawSlider(std::string fileName_, Dimendion dim_);
 
-	void Release(std::string file_name_) {	drawer2d.Release(file_name_); }
+	void Release(std::string fileName_) {	drawer2d.Release(fileName_); }
 
 private:
 	/**
 	* @brief 2D空間にスライダーを描画する
 	*/
-	void DrawSlider2d(std::string file_name_);
+	void DrawSlider2d(std::string fileName_);
 	/**
 	* @brief 3D空間にスライダーを描画する
 	*/
-	void DrawSlider3d(std::string file_name_);
+	void DrawSlider3d(std::string fileName_);
 
 	/**
 	* @brief Update() 内で使用される関数
@@ -74,20 +93,7 @@ private:
 	void UpdateSliderCurrentValue();
 
 private:
-	int count;				//!< @brief 経過フレームを保存
-
-	float X;				//!< @brief スライダー描画位置(X)
-	float Y;				//!< @brief スライダー描画位置(Y)
-	float Z;				//!< @brief スライダー描画位置(Z)
-
-	float MinValue;			//!< @brief 最小値
-	float MaxValue;			//!< @brief 最大値
-
-	float CurrentValue;		//!< @brief 現在の値
-	float NextValue;		//!< @brief 次の値
-	float MoveSpeed;		//!< @brief 移動速度
-
-	Direction Dir;			//!< @brief 進行方向
+	t_SilderState m_slider_sta;
 
 	Drawer2D drawer2d;		//!< @brief 描画用の関数を呼び出す
 	Drawer3D drawer3d;		//!< @brief 描画用の関数を呼び出す

@@ -14,11 +14,11 @@ void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_)
 	float top_tv = 0.f;
 	float bottom_tv = 1.f;
 	
-	if (m_texture_list[fileName_] != nullptr) {
-		left_tu = v_.tex_pos_start.x / m_texture_list[fileName_]->width;
-		right_tu =(v_.tex_pos_start.x + v_.tex_pos_end.x) / m_texture_list[fileName_]->width;
-		top_tv = v_.tex_pos_start.y / m_texture_list[fileName_]->height;
-		bottom_tv = (v_.tex_pos_start.y + v_.tex_pos_end.y) / m_texture_list[fileName_]->height;
+	if (m_ptr_tex_list[fileName_] != nullptr) {
+		left_tu = v_.tex_pos_start.x / m_ptr_tex_list[fileName_]->width;
+		right_tu =(v_.tex_pos_start.x + v_.tex_pos_end.x) / m_ptr_tex_list[fileName_]->width;
+		top_tv = v_.tex_pos_start.y / m_ptr_tex_list[fileName_]->height;
+		bottom_tv = (v_.tex_pos_start.y + v_.tex_pos_end.y) / m_ptr_tex_list[fileName_]->height;
 	}
 
 	// デカイポリゴン問題
@@ -31,8 +31,8 @@ void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_)
 		{ D3DXVECTOR3(v_.tex_pos_start.x, v_.tex_pos_start.y + v_.tex_pos_end.y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },										// 左下
 	};
 
-	if (m_texture_list[fileName_]) {
-		mgr->GetStatus()->d3d_device->SetTexture(0, m_texture_list[fileName_]->texture_data);
+	if (m_ptr_tex_list[fileName_]) {
+		mgr->GetStatus()->d3d_device->SetTexture(0, m_ptr_tex_list[fileName_]->texture_data);
 	}
 	// ライティング
 	mgr->GetStatus()->d3d_device->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
@@ -68,12 +68,12 @@ void Drawer2D::DrawLine(std::vector<t_LineDesc> descList_)
 		float tv = 0.0f;
 
 		// ここの Color の値がおかしい
-		// m_Alpha は想定値
-		DWORD color = D3DCOLOR_ARGB((int)(255 * descList_[i].m_Alpha), 255, 255, 255);
+		// alpha は想定値
+		DWORD color = D3DCOLOR_ARGB((int)(255 * descList_[i].alpha), 255, 255, 255);
 		LineVertex new_vertex =
 		{
-			descList_[i].m_Pos.x,
-			descList_[i].m_Pos.y,
+			descList_[i].pos.x,
+			descList_[i].pos.y,
 			0.f,
 			1.0f,
 			color
@@ -93,7 +93,7 @@ bool Drawer2D::CreateTexture(std::string fileName_)
 	t_Size size;
 	D3DXIMAGE_INFO info;
 
-	m_texture_list[fileName_] = new t_Texture;
+	m_ptr_tex_list[fileName_] = new t_Texture;
 
 	DxManager* mgr = DxManager::GetInstance();
 
@@ -115,7 +115,7 @@ bool Drawer2D::CreateTexture(std::string fileName_)
 		0x0000ff00,
 		nullptr,
 		nullptr,
-		&m_texture_list[fileName_]->texture_data)))
+		&m_ptr_tex_list[fileName_]->texture_data)))
 	{
 		return false;
 	}
@@ -124,15 +124,15 @@ bool Drawer2D::CreateTexture(std::string fileName_)
 		// テクスチャサイズの取得
 		D3DSURFACE_DESC desc;
 
-		if (FAILED(m_texture_list[fileName_]->texture_data->GetLevelDesc(0, &desc)))
+		if (FAILED(m_ptr_tex_list[fileName_]->texture_data->GetLevelDesc(0, &desc)))
 		{
-			m_texture_list[fileName_]->texture_data->Release();
+			m_ptr_tex_list[fileName_]->texture_data->Release();
 			return false;
 		}
 		// デカいポリゴン問題
 		// ここでは想定内の値が入っている
-		m_texture_list[fileName_]->width = (float)desc.Width;
-		m_texture_list[fileName_]->height = (float)desc.Height;
+		m_ptr_tex_list[fileName_]->width = (float)desc.Width;
+		m_ptr_tex_list[fileName_]->height = (float)desc.Height;
 	}
 
 	return true;
@@ -165,7 +165,7 @@ void Drawer2D::DrawFont(t_Vec2 pos_,std::string text_) {
 
 void Drawer2D::Release(std::string fileName_) {
 
-	delete[] m_texture_list[fileName_];
+	delete[] m_ptr_tex_list[fileName_];
 
-	m_texture_list.clear();
+	m_ptr_tex_list.clear();
 }

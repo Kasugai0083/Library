@@ -30,29 +30,29 @@
 /**
 * 線の座標と経過フレームを保存
 */
-struct Line
+struct t_Line
 {
-	Vec3 m_Pos;
-	int m_Counter;
+	Vec3 pos;
+	int counter;
 };
 
 /**
 * @brief 線のステータスを管理
-* @param m_Width	線の幅
-* @param m_Start	線の開始点
-* @param m_End		線の終点？
-* @param m_Center	線の中間点？
-* @param m_Timer	経過フレームを保存
-* @param m_Line		位置情報とタイマー
+* @param width	線の幅
+* @param start	線の開始点
+* @param end		線の終点？
+* @param center	線の中間点？
+* @param timer	経過フレームを保存
+* @param line		位置情報とタイマー
 */
-struct LineManager 
+struct t_LineManager 
 {
-	float m_Width;				
-	Vec3 m_Start;				
-	Vec3 m_End;					
-	Vec3 m_Center;				
-	int m_Timer;				
-	std::vector<Line>m_Line;	
+	float width;				
+	Vec3 start;				
+	Vec3 end;					
+	Vec3 center;				
+	int timer;				
+	std::vector<t_Line> line;	
 };
 
 /**
@@ -60,8 +60,8 @@ struct LineManager
 */
 struct t_LineDesc 
 {
-	Vec3 m_Pos;
-	float m_Alpha;
+	Vec3 pos;
+	float alpha;
 };
 
 class Drawer3D;
@@ -75,25 +75,25 @@ public:
 	* @param center 線の中間点
 	* @param end	線の終点
 	*/
-	LineDrawer(Vec3 start, Vec3 center,Vec3 end)
+	LineDrawer(Vec3 start_, Vec3 center_,Vec3 end_)
 	{
 		// 10.f でしか描画されない
 		// 訂正：Widthを上げるとどんどん高い位置で描画される
 		// 原因を探る
 		// ⑤で Width の値の半分を乗算しているため、位置ずれが起きていると思われる
-		m_LineManager.m_Width = 20.0f;
-		m_LineManager.m_Line.clear();
-		m_LineManager.m_Start = start;
-		m_LineManager.m_End = end;
-		m_LineManager.m_Center = center;
-		m_LineManager.m_Timer = 0;
+		m_line_mgr.width = 20.0f;
+		m_line_mgr.line.clear();
+		m_line_mgr.start = start_;
+		m_line_mgr.end = end_;
+		m_line_mgr.center = center_;
+		m_line_mgr.timer = 0;
 
-		Line line =
+		t_Line line =
 		{
-			m_LineManager.m_Start,
+			m_line_mgr.start,
 			120,
 		};
-		m_LineManager.m_Line.push_back(line);
+		m_line_mgr.line.push_back(line);
 	}
 
 	/**
@@ -107,10 +107,10 @@ public:
 	void DrawLine(Dimendion dim_);
 
 private:
-	void UpdateLine(); 	//!< @brief m_Counter を減算する
+	void UpdateLine(); 	//!< @brief counter を減算する
 
 private:
-	LineManager m_LineManager;	//!< @brief 曲線の情報を管理
+	t_LineManager m_line_mgr;	//!< @brief 曲線の情報を管理
 
 	Drawer2D drawer2d;			//!< @brief 描画関数を呼び出すために使用
 	Drawer3D drawer3d;			//!< @brief 描画関数を呼び出すために使用

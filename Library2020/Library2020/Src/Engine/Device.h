@@ -36,21 +36,21 @@ namespace Device{
 	* @param n_virtKey 入力キーを char (大文字)で指定
 	* @return キーボードが入力されている時 => true
 	*/
-	bool KeyOn(int n_virtKye);
+	bool KeyOn(int nVirtKey_);
 
 	/**
 	* @brief キーボード入力時の状態を取得
 	* @param n_virtKey 入力キーを char (大文字)で指定
 	* @return キーボードが入力された時 => true
 	*/
-	bool KeyPress(int n_virtKey);
+	bool KeyPress(int nVirtKey_);
 
 	/**
 	* @brief キーボード入力を話した時の状態を取得
 	* @param n_virtKey 入力キーを char (大文字)で指定
 	* @return キーボード入力が解除された時 => true
 	*/
-	bool KeyOff(int n_VirtKey);
+	bool KeyOff(int nVirtKey_);
 
 	/**
 	* @brief 現在のマウス座標を取得？

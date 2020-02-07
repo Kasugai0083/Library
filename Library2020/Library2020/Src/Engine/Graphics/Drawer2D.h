@@ -24,15 +24,15 @@ public:
 	/**
 	* @brief テクスチャを貼り付けたポリゴンを描画する
 	* @param v_ ポリゴンの頂点情報 と テクスチャの座標情報
-	* @param file_name_ m_TextureList の要素
+	* @param fileName_ m_ptr_tex_list の要素
 	*/
 	void DrawTexture(t_VertexPos v_, std::string fileName_);
 
 
 	/**
-	* @brief m_TextureList にテクスチャ情報を入力\n
+	* @brief m_ptr_tex_list にテクスチャ情報を入力\n
 	* 読み込みに失敗した場合、エラーメッセージを返す
-	* @param file_name_ 要素番号を指定
+	* @param fileName_ 要素番号を指定
 	*/
 	void LoadTexture(std::string fileName_) {
 		if (!CreateTexture(fileName_)) {
@@ -53,7 +53,7 @@ public:
 	* @brief テクスチャ情報を取得
 	* @return テクスチャ情報のポインタを返す
 	*/
-	t_Texture* GetTexture(std::string fileName_) { return m_texture_list[fileName_]; }
+	t_Texture* GetTexture(std::string fileName_) { return m_ptr_tex_list[fileName_]; }
 
 
 	/**
@@ -72,13 +72,13 @@ public:
 
 private:
 	/**
-	* @brief m_TextureList にテクスチャ情報を入力
-	* @param file_name_ 要素番号を指定
+	* @brief m_ptr_tex_list にテクスチャ情報を入力
+	* @param fileName_ 要素番号を指定
 	*/
 	bool CreateTexture(std::string fileName_);
 
 private:
 
-	std::map<std::string, t_Texture*>m_texture_list; //!< @brief 画像情報を保管
+	std::map<std::string, t_Texture*>m_ptr_tex_list; //!< @brief 画像情報を保管
 
 };

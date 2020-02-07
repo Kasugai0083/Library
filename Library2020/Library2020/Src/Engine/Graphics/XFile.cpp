@@ -4,9 +4,9 @@
 bool XFile::Load(std::string file_name)
 {
 	// DirectX
-	DxManager* Ins_DXManager = DxManager::GetInstance();
+	DxManager* mgr = DxManager::GetInstance();
 
-	if (!Ins_DXManager) { return false; }
+	if (!mgr) { return false; }
 
 	LPD3DXBUFFER p_material_buffer = NULL;
 	
@@ -14,41 +14,41 @@ bool XFile::Load(std::string file_name)
 	if (FAILED(D3DXLoadMeshFromXA(
 		file_name.c_str(),
 		D3DXMESH_SYSTEMMEM,
-		Ins_DXManager->GetStatus()->d3d_device,
+		mgr->GetStatus()->d3d_device,
 		NULL,
 		&p_material_buffer,
 		NULL,
-		&m_MaterialNum,
-		&m_pMesh
+		&m_material_num,
+		&m_mesh
 	)))
 	{
 		return false;
 	}
 
-	m_pMeshMaterialList = new D3DMATERIAL9[m_MaterialNum];
+	m_mesh_material_list = new D3DMATERIAL9[m_material_num];
 
-	m_pTextureList = new LPDIRECT3DTEXTURE9[m_MaterialNum];
+	m_ptr_tex_list = new LPDIRECT3DTEXTURE9[m_material_num];
 
 	D3DXMATERIAL* pmat_list = (D3DXMATERIAL*)p_material_buffer->GetBufferPointer();
 
-	for (DWORD i = 0; i < m_MaterialNum; i++)
+	for (DWORD i = 0; i < m_material_num; i++)
 	{
-		m_pMeshMaterialList[i] = pmat_list[i].MatD3D;
-		m_pTextureList[i] = NULL;
+		m_mesh_material_list[i] = pmat_list[i].MatD3D;
+		m_ptr_tex_list[i] = NULL;
 
 		if(pmat_list[i].pTextureFilename != NULL)
 		{
 			std::string file_name = pmat_list[i].pTextureFilename;
 			LPDIRECT3DTEXTURE9 texture = NULL;
-			if(m_TextureList[file_name] == NULL)
+			if(m_tex_list[file_name] == NULL)
 			{
-				D3DXCreateTextureFromFileA(Ins_DXManager->GetStatus()->d3d_device,
+				D3DXCreateTextureFromFileA(mgr->GetStatus()->d3d_device,
 											file_name.c_str(),
-											&m_TextureList[file_name]);
+											&m_tex_list[file_name]);
 			}
 
-			m_pTextureList[i] = m_TextureList[file_name];
-			m_TextureNameList[i] = file_name;
+			m_ptr_tex_list[i] = m_tex_list[file_name];
+			m_tex_name_list[i] = file_name;
 
 		}
 	}
@@ -61,45 +61,45 @@ bool XFile::Load(std::string file_name)
 XFile::~XFile()
 {
 
-	if(m_pMeshMaterialList != NULL)
+	if(m_mesh_material_list != NULL)
 	{
-		delete[](m_pMeshMaterialList);
-		m_pMeshMaterialList = NULL;
+		delete[](m_mesh_material_list);
+		m_mesh_material_list = NULL;
 	}
 
-	if (m_pTextureList != NULL) 
+	if (m_ptr_tex_list != NULL) 
 	{
-		for(unsigned int i = 0; i < m_MaterialNum; i++)
+		for(unsigned int i = 0; i < m_material_num; i++)
 		{
-			if(m_pTextureList[i] != NULL &&
-				m_TextureList[m_TextureNameList[i]] != NULL)
+			if(m_ptr_tex_list[i] != NULL &&
+				m_tex_list[m_tex_name_list[i]] != NULL)
 			{
-				m_TextureList[m_TextureNameList[i]]->Release();
-				m_pTextureList[i] = NULL;
+				m_tex_list[m_tex_name_list[i]]->Release();
+				m_ptr_tex_list[i] = NULL;
 			}
 		}
 
-		delete[](m_pTextureList);
-		m_pTextureList = NULL;
+		delete[](m_ptr_tex_list);
+		m_ptr_tex_list = NULL;
 
 	}
 
-	m_TextureNameList.clear();
+	m_tex_name_list.clear();
 }
 
 void XFile::Draw()
 {
-	DxManager* Ins_DXManager = DxManager::GetInstance();
+	DxManager* mgr = DxManager::GetInstance();
 
-	if (!Ins_DXManager) { return; }
+	if (!mgr) { return; }
 
-	for(DWORD i = 0; i < m_MaterialNum; i++)
+	for(DWORD i = 0; i < m_material_num; i++)
 	{
-		Ins_DXManager->GetStatus()->d3d_device->SetMaterial(&m_pMeshMaterialList[i]);
+		mgr->GetStatus()->d3d_device->SetMaterial(&m_mesh_material_list[i]);
 
-		Ins_DXManager->GetStatus()->d3d_device->SetTexture(0, m_pTextureList[i]);
+		mgr->GetStatus()->d3d_device->SetTexture(0, m_ptr_tex_list[i]);
 
-		m_pMesh->DrawSubset(i);
+		m_mesh->DrawSubset(i);
 	}
 
 }

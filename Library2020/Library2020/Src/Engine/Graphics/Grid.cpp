@@ -1,20 +1,20 @@
 #include "Grid.h"
 #include "Drawer2D.h"
 
-// m_Counter を減算する
+// counter を減算する
 void LineDrawer::UpdateLine() {
-	for (auto& line : m_LineManager.m_Line)
+	for (auto& line : m_line_mgr.line)
 	{
-		line.m_Counter -= 0;
+		line.counter -= 0;
 	}
 }
 
 void LineDrawer::UpdateLineManager() {
-	// m_Timer を加算
-	m_LineManager.m_Timer++;
+	// timer を加算
+	m_line_mgr.timer++;
 
 	// 6 flame 後、行われる処理
-	if (m_LineManager.m_Timer % 6 == 0)
+	if (m_line_mgr.timer % 6 == 0)
 	{
 		Vec3 new_pos;
 
@@ -23,7 +23,7 @@ void LineDrawer::UpdateLineManager() {
 		// persent は時間に関わる割合であると予測できる
 		// persent の値を変更すると =>
 		// 曲線の描画速度があがる + 座標が変わる(問題！)
-		float percent = m_LineManager.m_Timer / 15.0f;
+		float percent = m_line_mgr.timer / 15.0f;
 
 		// 仮説①：始点と中間点、終点を結ぶ曲線の計算をしている
 		// 仮説②：ブレンドする値は始点・中間点・終点といった関わりではなく、
@@ -31,57 +31,57 @@ void LineDrawer::UpdateLineManager() {
 		new_pos.x = 
 			(1 - percent) 
 			* (1 - percent) 
-			* m_LineManager.m_Start.x + 2 
+			* m_line_mgr.start.x + 2 
 			* (1 - percent) 
 			* percent 
-			* m_LineManager.m_Center.x + percent 
+			* m_line_mgr.center.x + percent 
 			* percent 
-			* m_LineManager.m_End.x;
+			* m_line_mgr.end.x;
 
 		new_pos.y = 
 			(1 - percent) 
 			* (1 - percent) 
-			* m_LineManager.m_Start.y + 2 
+			* m_line_mgr.start.y + 2 
 			* (1 - percent) * percent 
-			* m_LineManager.m_Center.y + percent 
+			* m_line_mgr.center.y + percent 
 			* percent 
-			* m_LineManager.m_End.y;
+			* m_line_mgr.end.y;
 
 		new_pos.z = 
 			(1 - percent) 
 			* (1 - percent) 
-			* m_LineManager.m_Start.z + 2 
+			* m_line_mgr.start.z + 2 
 			* (1 - percent) * percent 
-			* m_LineManager.m_Center.z + percent 
+			* m_line_mgr.center.z + percent 
 			* percent 
-			* m_LineManager.m_End.z;
+			* m_line_mgr.end.z;
 
-		Line new_line =
+		t_Line new_line =
 		{
 			new_pos,
 			120,
 		};
-		m_LineManager.m_Line.push_back(new_line);
+		m_line_mgr.line.push_back(new_line);
 	}
 
 	UpdateLine();
 }
 
 void LineDrawer::DrawLine(Dimendion dim_) {
-	if (m_LineManager.m_Line.size() <= 2)
+	if (m_line_mgr.line.size() <= 2)
 	{
 		return;
 	}
 
 	std::vector<t_LineDesc> desc_list;
 
-	for (int i = 0; i < (int)m_LineManager.m_Line.size() - 1; i++)
+	for (int i = 0; i < (int)m_line_mgr.line.size() - 1; i++)
 	{
 		Vec3 direction = Vec3(
 			// ②.保存されてる座標と次の座標でベクトルを算出する
-			m_LineManager.m_Line[i + 1].m_Pos.x - m_LineManager.m_Line[i].m_Pos.x,
-			m_LineManager.m_Line[i + 1].m_Pos.y - m_LineManager.m_Line[i].m_Pos.y,
-			m_LineManager.m_Line[i + 1].m_Pos.z - m_LineManager.m_Line[i].m_Pos.z
+			m_line_mgr.line[i + 1].pos.x - m_line_mgr.line[i].pos.x,
+			m_line_mgr.line[i + 1].pos.y - m_line_mgr.line[i].pos.y,
+			m_line_mgr.line[i + 1].pos.z - m_line_mgr.line[i].pos.z
 		);
 
 
@@ -108,18 +108,18 @@ void LineDrawer::DrawLine(Dimendion dim_) {
 
 			// ⑤．線の幅 / 2 を④のベクトルに掛ける
 			Vec3 new_pos = Vec3(
-				direction.x + m_LineManager.m_Width / 2.0f * normal.x,
-				direction.y + m_LineManager.m_Width / 2.0f * normal.y,
-				direction.z + m_LineManager.m_Width / 2.0f * normal.z
+				direction.x + m_line_mgr.width / 2.0f * normal.x,
+				direction.y + m_line_mgr.width / 2.0f * normal.y,
+				direction.z + m_line_mgr.width / 2.0f * normal.z
 			);
 
 			// 	⑥．⑤のベクトルに座標を足した新しい座標を作る
-			new_pos.x += m_LineManager.m_Line[i].m_Pos.x;
-			new_pos.y += m_LineManager.m_Line[i].m_Pos.y;
-			new_pos.z += m_LineManager.m_Line[i].m_Pos.z;
+			new_pos.x += m_line_mgr.line[i].pos.x;
+			new_pos.y += m_line_mgr.line[i].pos.y;
+			new_pos.z += m_line_mgr.line[i].pos.z;
 
 			// alpha 色の濃度
-			float alpha = (float)m_LineManager.m_Line[i].m_Counter / 120.0f;
+			float alpha = (float)m_line_mgr.line[i].counter / 120.0f;
 			t_LineDesc new_desc =
 			{
 				new_pos,

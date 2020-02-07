@@ -7,13 +7,19 @@
 * @brief
 * リザルトシーンの処理
 */
+
+namespace {
+	Pos3 pos1(5.f, 5.f, 0.f);
+	Pos3 pos2(0.f, 0.f, 10.f);
+}
+
 class ResultScene :public SceneBase
 {
 public:
 	//!< コンストラクタ
 	ResultScene() : 
-		slider1(5.f, 5.f, 0.f, Direction::LeftToRight),
-		slider2(0.f, 0.f, 10.f, Direction::RightToLeft)
+		slider1(pos1, Direction::LEFT_TO_RIGHT),
+		slider2(pos2, Direction::RIGHT_TO_LEFT)
 	{}
 	~ResultScene()override;		//!< デストラクタ
 private:

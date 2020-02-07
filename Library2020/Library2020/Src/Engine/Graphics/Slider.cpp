@@ -7,119 +7,123 @@
 void Slider::UpdateNextSliderValue(bool plus_) {
 	// 値を更新する
 	if (plus_) {
-		NextValue = MaxValue;
+		m_slider_sta.next_value = m_slider_sta.max_value;
 	}
 	else {
-		NextValue = MinValue;
+		m_slider_sta.next_value = m_slider_sta.min_value;
 	}
 
 	// 今の値と新しい値の差を出して、速度を算出する
-	float distance = fabsf(CurrentValue - NextValue);
+	float distance = fabsf(m_slider_sta.current_value - m_slider_sta.next_value);
 
 	// 移動にかかるフレーム数
 	float moev_frame = 60.0f;
-	MoveSpeed = distance / moev_frame;
+	m_slider_sta.move_speed = distance / moev_frame;
 }
 
 void Slider::UpdateSliderCurrentValue() {
-	// NextValueとCurrentValueに差file_name_があればMoveSpeedで演算する
-	if (CurrentValue <= NextValue)
+	// next_valueとcurrent_valueに差があればmove_speedで演算する
+	if (m_slider_sta.current_value <= m_slider_sta.next_value)
 	{
-		CurrentValue = min(CurrentValue + MoveSpeed, NextValue);
+		m_slider_sta.current_value = 
+		min(m_slider_sta.current_value + m_slider_sta.move_speed, m_slider_sta.next_value);
 	}
 	else
 	{
-		CurrentValue = max(CurrentValue - MoveSpeed, NextValue);
+		m_slider_sta.current_value = 
+		max(m_slider_sta.current_value - m_slider_sta.move_speed, m_slider_sta.next_value);
 	}
 }
 
 void Slider::Update() {
 
-	count++;
+	m_slider_sta.count++;
 	UpdateSliderCurrentValue();
 
-	if (count % 120 == 0)
+	if (m_slider_sta.count % 120 == 0)
 	{
 		UpdateNextSliderValue(true);
 	}
-	else if (count % 60 == 0)
+	else if (m_slider_sta.count % 60 == 0)
 	{
 		UpdateNextSliderValue(false);
 	}
 
 }
 
-void ReverseMove(float rate, float size, float& out_pos, float& out_tex_pos, float& out_size)
+void ReverseMove(float rate_, float size_, float& outPos_, float& outTexPos_, float& outSize_)
 {
 	// 比率から描画開始位置をずらす
-	out_pos = 0.f;
+	outPos_ = 0.f;
 
 	// サイズも比率で変更する
-	out_size *= rate;
+	outSize_ *= rate_;
 
 	// テクスチャの座標も比率の分だけずらす
-	out_tex_pos += (1.0f - rate) * size;
+	outTexPos_ += (1.0f - rate_) * size_;
 }
 
-void Slider::DrawSlider(std::string file_name_, Dimendion dim_) {
-	if (dim_ == Dimendion::DIMENSION_2) { DrawSlider2d(file_name_);}
-	else if(dim_ == Dimendion::DIMENSION_3){ DrawSlider3d(file_name_); }
+void Slider::DrawSlider(std::string fileName_, Dimendion dim_) {
+	if (dim_ == Dimendion::DIMENSION_2) { DrawSlider2d(fileName_);}
+	else if(dim_ == Dimendion::DIMENSION_3){ DrawSlider3d(fileName_); }
 }
 
-void Slider::DrawSlider2d(std::string file_name_)
+void Slider::DrawSlider2d(std::string fileName_)
 {
 
-	if (!drawer2d.GetTexture(file_name_)) { return; }
+	if (!drawer2d.GetTexture(fileName_)) { return; }
 		
-	float pos_x = X;
-	float pos_y = Y;
+	float pos_x = m_slider_sta.x;
+	float pos_y = m_slider_sta.y;
 	float pos_z = 0.0f;
 	float tex_x = 0.0f;
 	float tex_y = 0.0f;
-	float tex_width = drawer2d.GetTexture(file_name_)->width;
-	float tex_height = drawer2d.GetTexture(file_name_)->height;
+	float tex_width = drawer2d.GetTexture(fileName_)->width;
+	float tex_height = drawer2d.GetTexture(fileName_)->height;
 
 	// 現状の値を比率として算出する
-	float rate = (CurrentValue - MinValue) / (MaxValue - MinValue);
+	float rate = (m_slider_sta.current_value - m_slider_sta.min_value) 
+				 / (m_slider_sta.max_value - m_slider_sta.min_value);
 
-	if (Dir == Direction::LeftToRight) {
+	if (m_slider_sta.dir == Direction::LEFT_TO_RIGHT) {
 		tex_width *= rate;
 	}
-	else if (Dir == Direction::RightToLeft) {
+	else if (m_slider_sta.dir == Direction::RIGHT_TO_LEFT) {
 		ReverseMove(rate, tex_width, pos_x, tex_x, tex_width);
 	}
 
 	t_VertexPos a{ Pos3(pos_x, pos_y, pos_z), Pos2(tex_x,tex_y),Pos2(tex_width, tex_height) };
 
-	drawer2d.DrawTexture(a, file_name_);
+	drawer2d.DrawTexture(a, fileName_);
 
 }
 
-void Slider::DrawSlider3d(std::string file_name_)
+void Slider::DrawSlider3d(std::string fileName_)
 {
 
-	if (!drawer3d.GetTexture(file_name_)) { return; }
+	if (!drawer3d.GetTexture(fileName_)) { return; }
 		
-	float pos_x = X;
-	float pos_y = Y;
-	float pos_z = Z;
+	float pos_x = m_slider_sta.x;
+	float pos_y = m_slider_sta.y;
+	float pos_z = m_slider_sta.z;
 	float tex_x = 0.0f;
 	float tex_y = 0.0f;
-	float tex_width = drawer3d.GetTexture(file_name_)->width;
-	float tex_height = drawer3d.GetTexture(file_name_)->height;
+	float tex_width = drawer3d.GetTexture(fileName_)->width;
+	float tex_height = drawer3d.GetTexture(fileName_)->height;
 
 	// 現状の値を比率として算出する
-	float rate = (CurrentValue - MinValue) / (MaxValue - MinValue);
+	float rate = (m_slider_sta.current_value - m_slider_sta.min_value)
+				 / (m_slider_sta.max_value - m_slider_sta.min_value);
 
-	if (Dir == Direction::LeftToRight) {
+	if (m_slider_sta.dir == Direction::LEFT_TO_RIGHT) {
 		tex_width *= rate;
 	}
-	else if (Dir == Direction::RightToLeft) {
+	else if (m_slider_sta.dir == Direction::RIGHT_TO_LEFT) {
 		ReverseMove(rate, tex_width, pos_x, tex_x, tex_width);
 	}
 
 	t_VertexPos a{ Pos3(pos_x, pos_y, pos_z), Pos2(tex_x,tex_y),Pos2(tex_width, tex_height) };
 
-	drawer3d.DrawTexture(a, file_name_);
+	drawer3d.DrawTexture(a, fileName_);
 
 }

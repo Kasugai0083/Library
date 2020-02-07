@@ -21,10 +21,10 @@ public:
 	* メンバ変数を初期化する
 	*/
 	XFile() :
-		m_MaterialNum(0),
-		m_pMesh(NULL),
-		m_pMeshMaterialList(NULL),
-		m_pTextureList(NULL)
+		m_material_num(0),
+		m_mesh(NULL),
+		m_mesh_material_list(NULL),
+		m_ptr_tex_list(NULL)
 	{
 	}
 
@@ -39,7 +39,7 @@ public:
 	* @param XFile のパスを指定する\n
 	* 読み込まれた XFile は m_pFileList に保存
 	*/
-	bool Load(std::string file_name);
+	bool Load(std::string fileName_);
 
 	/**
 	* @brief 読み込まれた XFile 情報に基づいて描画\n
@@ -51,25 +51,25 @@ private:
 	/**
 	* @brief XFile を読み込んだ際にマテリアル情報を保管
 	*/
-	DWORD m_MaterialNum;
-	D3DMATERIAL9* m_pMeshMaterialList;
+	DWORD m_material_num;
+	D3DMATERIAL9* m_mesh_material_list;
 
 	/**
 	* @brief XFile を読み込んだ際にメッシュ情報を保管
 	*/
-	LPD3DXMESH m_pMesh;
+	LPD3DXMESH m_mesh;
 
 	/**
 	* @brief XFile を読み込んだ際にテクスチャ情報を保管
 	*/
-	LPDIRECT3DTEXTURE9* m_pTextureList;
-	std::map<std::string, LPDIRECT3DTEXTURE9> m_TextureList;
-	std::map<int, std::string> m_TextureNameList;
+	LPDIRECT3DTEXTURE9* m_ptr_tex_list;
+	std::map<std::string, LPDIRECT3DTEXTURE9> m_tex_list;
+	std::map<int, std::string> m_tex_name_list;
 
 	/**
 	* @brief XFile の情報を保管 
 	*/
-	std::map<std::string, XFile*> m_pXFileList;
+	std::map<std::string, XFile*> m_ptr_xfile_list;
 
 };
 

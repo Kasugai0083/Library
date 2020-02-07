@@ -42,6 +42,8 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 	while (Device::ProcessMessage())
 	{
+		// ESCAPE ÉLÅ[Ç≈èIóπ
+		if(Device::KeyPress(VK_ESCAPE)){ PostQuitMessage(0); }
 
 		Device::KeyUpdate();
 

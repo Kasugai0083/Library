@@ -82,7 +82,7 @@ void Drawer3D::DrawXFile(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 angle
 	TransNormal(pos_,scale_,angle_);
 
 
-	if (m_pXFileList[fileName_]) { m_pXFileList[fileName_]->Draw(); }
+	if (m_ptr_xfile_list[fileName_]) { m_ptr_xfile_list[fileName_]->Draw(); }
 
 }
 
@@ -94,15 +94,15 @@ void Drawer3D::DrawBillbord(D3DXVECTOR3 pos_, D3DXVECTOR3 scale_, D3DXVECTOR3 an
 
 	TransBillboard(pos_, scale_, angle_);
 
-	if (m_pXFileList[fileName_]) { m_pXFileList[fileName_]->Draw(); }
+	if (m_ptr_xfile_list[fileName_]) { m_ptr_xfile_list[fileName_]->Draw(); }
 
 }
 
 bool Drawer3D::LoadXFile(std::string fileName_) {
-	m_pXFileList[fileName_] = new XFile;
-	m_pXFileList[fileName_]->Load(fileName_);
+	m_ptr_xfile_list[fileName_] = new XFile;
+	m_ptr_xfile_list[fileName_]->Load(fileName_);
 
-	if (m_pXFileList[fileName_]) { return true; }
+	if (m_ptr_xfile_list[fileName_]) { return true; }
 	
 	return false;
 }
@@ -159,11 +159,11 @@ void Drawer3D::DrawTexture(t_VertexPos v_, std::string fileName_)
 	float top_tv = 0.f;
 	float bottom_tv = 1.f;
 
-	if (m_TextureList[fileName_] != nullptr) {
-		left_tu = v_.tex_pos_start.x / m_TextureList[fileName_]->width;
-		right_tu = (v_.tex_pos_start.x + v_.tex_pos_end.x) / m_TextureList[fileName_]->width;
-		top_tv = v_.tex_pos_start.y / m_TextureList[fileName_]->height;
-		bottom_tv = (v_.tex_pos_start.y + v_.tex_pos_end.y) / m_TextureList[fileName_]->height;
+	if (m_ptr_tex_list[fileName_] != nullptr) {
+		left_tu = v_.tex_pos_start.x / m_ptr_tex_list[fileName_]->width;
+		right_tu = (v_.tex_pos_start.x + v_.tex_pos_end.x) / m_ptr_tex_list[fileName_]->width;
+		top_tv = v_.tex_pos_start.y / m_ptr_tex_list[fileName_]->height;
+		bottom_tv = (v_.tex_pos_start.y + v_.tex_pos_end.y) / m_ptr_tex_list[fileName_]->height;
 	}
 
 	// デカイポリゴン問題
@@ -176,8 +176,8 @@ void Drawer3D::DrawTexture(t_VertexPos v_, std::string fileName_)
 		{ D3DXVECTOR3(v_.tex_pos_start.x, v_.tex_pos_start.y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },										// 左下
 	};
 
-	if (m_TextureList[fileName_]) {
-		mgr->GetStatus()->d3d_device->SetTexture(0, m_TextureList[fileName_]->texture_data);
+	if (m_ptr_tex_list[fileName_]) {
+		mgr->GetStatus()->d3d_device->SetTexture(0, m_ptr_tex_list[fileName_]->texture_data);
 	}
 
 	mgr->GetStatus()->d3d_device->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(t_CustomVertex));
@@ -190,7 +190,7 @@ void Drawer3D::DrawLine(std::vector<t_LineDesc> descList_)
 	DxManager* mgr = DxManager::GetInstance();
 	if (!mgr) { return; }
 
-	DrawSetting(descList_[0].m_Pos.x, descList_[0].m_Pos.y, descList_[0].m_Pos.z);
+	DrawSetting(descList_[0].pos.x, descList_[0].pos.y, descList_[0].pos.z);
 
 	struct LineVertex
 	{
@@ -211,13 +211,13 @@ void Drawer3D::DrawLine(std::vector<t_LineDesc> descList_)
 		float tv = 0.0f;
 
 		// ここの Color の値がおかしい
-		// m_Alpha は想定値
-		DWORD color = D3DCOLOR_ARGB((int)(255 * descList_[i].m_Alpha), 255, 255, 255);
+		// alpha は想定値
+		DWORD color = D3DCOLOR_ARGB((int)(255 * descList_[i].alpha), 255, 255, 255);
 		LineVertex new_vertex =
 		{
-			descList_[i].m_Pos.x,
-			descList_[i].m_Pos.y,
-			descList_[i].m_Pos.z,
+			descList_[i].pos.x,
+			descList_[i].pos.y,
+			descList_[i].pos.z,
 			1.0f,
 			color
 		};
@@ -233,7 +233,7 @@ bool Drawer3D::CreateTexture(std::string fileName_)
 	t_Size size;
 	D3DXIMAGE_INFO info;
 
-	m_TextureList[fileName_] = new t_Texture;
+	m_ptr_tex_list[fileName_] = new t_Texture;
 
 	DxManager* mgr = DxManager::GetInstance();
 
@@ -255,7 +255,7 @@ bool Drawer3D::CreateTexture(std::string fileName_)
 		0x0000ff00,
 		nullptr,
 		nullptr,
-		&m_TextureList[fileName_]->texture_data)))
+		&m_ptr_tex_list[fileName_]->texture_data)))
 	{
 		return false;
 	}
@@ -264,15 +264,15 @@ bool Drawer3D::CreateTexture(std::string fileName_)
 		// テクスチャサイズの取得
 		D3DSURFACE_DESC desc;
 
-		if (FAILED(m_TextureList[fileName_]->texture_data->GetLevelDesc(0, &desc)))
+		if (FAILED(m_ptr_tex_list[fileName_]->texture_data->GetLevelDesc(0, &desc)))
 		{
-			m_TextureList[fileName_]->texture_data->Release();
+			m_ptr_tex_list[fileName_]->texture_data->Release();
 			return false;
 		}
 		// デカいポリゴン問題
 		// ここでは想定内の値が入っている
-		m_TextureList[fileName_]->width = (float)desc.Width;
-		m_TextureList[fileName_]->height = (float)desc.Height;
+		m_ptr_tex_list[fileName_]->width = (float)desc.Width;
+		m_ptr_tex_list[fileName_]->height = (float)desc.Height;
 	}
 
 	return true;
@@ -280,7 +280,7 @@ bool Drawer3D::CreateTexture(std::string fileName_)
 
 void Drawer3D::Release(std::string fileName_) {
 
-	delete m_TextureList[fileName_];
+	delete m_ptr_tex_list[fileName_];
 
-	m_TextureList.clear();
+	m_ptr_tex_list.clear();
 }

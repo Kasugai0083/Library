@@ -108,6 +108,7 @@ source : src
 library : lib
 object : obj
 control : ctl
+status : sta
 
 ◆エンジンパート
 buffer : buf

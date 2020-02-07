@@ -28,11 +28,11 @@ namespace {
 	};
 };
 
-LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, LPARAM lparam)
+LRESULT CALLBACK WindowProc(HWND windowHandle_, UINT messageId_, WPARAM wParam_, LPARAM lParam_)
 {
 	int timer = 0;
 
-	switch (message_id)
+	switch (messageId_)
 	{
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -80,8 +80,8 @@ LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, 
 	case WM_MOUSEMOVE:
 
 		// 更新する座標を取得
-		pt.start.x = LOWORD(lparam);
-		pt.start.y = HIWORD(lparam);
+		pt.start.x = LOWORD(lParam_);
+		pt.start.y = HIWORD(lParam_);
 		break;
 
 	case WM_SYSKEYDOWN: // システムキー押下開始時
@@ -91,7 +91,7 @@ LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, 
 
 	}
 
-	return DefWindowProc(window_handle, message_id, wparam, lparam);
+	return DefWindowProc(windowHandle_, messageId_, wParam_, lParam_);
 }
 
 namespace Device{
@@ -178,14 +178,14 @@ namespace Device{
 		if (GetKeyboardState(key[KB_CUR])) { return true; }
 		return false;
 	}
-	bool KeyOn(int nVirtKey) {
-		return KeyTest(key[KB_CUR][nVirtKey]);
+	bool KeyOn(int nVirtKey_) {
+		return KeyTest(key[KB_CUR][nVirtKey_]);
 	}
-	bool KeyPress(int nVirtKey) {
-		return KeyTest(key[KB_CUR][nVirtKey]) && !KeyTest(key[1][nVirtKey]);
+	bool KeyPress(int nVirtKey_) {
+		return KeyTest(key[KB_CUR][nVirtKey_]) && !KeyTest(key[1][nVirtKey_]);
 	}
-	bool KeyOff(int nVirtKey) {
-		return !KeyTest(key[KB_CUR][nVirtKey]) && KeyTest(key[1][nVirtKey]);
+	bool KeyOff(int nVirtKey_) {
+		return !KeyTest(key[KB_CUR][nVirtKey_]) && KeyTest(key[1][nVirtKey_]);
 	}
 
 	t_Vec2 GetMousePoint() {
