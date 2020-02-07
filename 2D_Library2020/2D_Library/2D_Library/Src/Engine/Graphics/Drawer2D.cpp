@@ -1,6 +1,5 @@
 #include "Drawer2D.h"
 #include "DirectX.h"
-#include "HandMade.h"
 #include "Grid.h"
 #include <vector>
 
@@ -23,6 +22,8 @@ void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_)
 
 	// デカイポリゴン問題
 	// ここの値も正常
+	(v_.tex_pos_start.y + v_.tex_pos_end.y);
+	(v_.tex_pos_start.x + v_.tex_pos_end.x);
 	t_CustomVertex v[] =
 	{
 		{ D3DXVECTOR3(v_.tex_pos_start.x, v_.tex_pos_start.y, 0.0f), D3DXVECTOR2(left_tu, top_tv) },															// 左上
