@@ -47,10 +47,15 @@ void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_)
 		//{ D3DXVECTOR3(harf_x, -harf_y, 0.0f),  D3DXVECTOR2(right_tu, bottom_tv) },			// 右下
 		//{ D3DXVECTOR3(-harf_x, -harf_y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },			// 左下
 
-		{ D3DXVECTOR3(-harf_x, -harf_y, 0.0f),  D3DXVECTOR2(left_tu, top_tv) },			// 左上
-		{ D3DXVECTOR3(-harf_x, harf_y, 0.0f),   D3DXVECTOR2(left_tu, bottom_tv) },			// 左下
-		{ D3DXVECTOR3(harf_x, harf_y, 0.0f),  D3DXVECTOR2(right_tu, bottom_tv) },		// 右下
-		{ D3DXVECTOR3(harf_x, -harf_y, 0.0f), D3DXVECTOR2(right_tu, top_tv) },			// 右上
+		//{ -harf_x, -harf_y, 0.0f, 1.f,left_tu, top_tv},			// 左上
+		//{ -harf_x, harf_y, 0.0f, 1.f,left_tu, bottom_tv},			// 左下
+		//{ harf_x, harf_y, 0.0f, 1.f,right_tu, bottom_tv},			// 右下
+		//{ harf_x, -harf_y, 0.0f, 1.f,right_tu, top_tv},			// 右上
+
+		{ v_.pos.x - harf_x, v_.pos.y - harf_y, 0.0f, 1.f,left_tu, top_tv},			// 左上
+		{ v_.pos.x + harf_x, v_.pos.y - harf_y, 0.0f, 1.f,right_tu, top_tv},			// 右上
+		{ v_.pos.x + harf_x, v_.pos.y + harf_y, 0.0f, 1.f,right_tu, bottom_tv},			// 右下
+		{ v_.pos.x - harf_x, v_.pos.y + harf_y, 0.0f, 1.f,left_tu, bottom_tv},			// 左下
 	};
 #endif
 
@@ -62,7 +67,7 @@ void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_)
 	// ライティング
 	mgr->GetStatus()->d3d_device->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
 
-	mgr->GetStatus()->d3d_device->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
+	mgr->GetStatus()->d3d_device->SetFVF(D3DFVF_XYZRHW | D3DFVF_TEX1);
 
 	mgr->GetStatus()->d3d_device->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(t_CustomVertex));
 }
@@ -108,7 +113,7 @@ void Drawer2D::DrawLine(std::vector<t_LineDesc> descList_)
 	}
 	mgr->GetStatus()->d3d_device->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
 
-	mgr->GetStatus()->d3d_device->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
+	mgr->GetStatus()->d3d_device->SetFVF(D3DFVF_XYZRHW | D3DFVF_TEX1);
 
 	mgr->GetStatus()->d3d_device->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, vertex_list.size() - 2, &vertex_list[0], sizeof(LineVertex));
 }

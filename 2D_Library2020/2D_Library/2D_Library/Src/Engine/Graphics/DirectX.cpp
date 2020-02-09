@@ -29,9 +29,9 @@ bool DxManager::InitDirectX(HWND windowHandle_)
 	// ウィンドウモード設定 => 定数で切り替え
 	m_dx_status.d3d_present_param->Windowed = true;
 	//横の解像度
-	m_dx_status.d3d_present_param->BackBufferWidth = 1920;
+	m_dx_status.d3d_present_param->BackBufferWidth = WIN_W;
 	//縦の解像度
-	m_dx_status.d3d_present_param->BackBufferHeight = 1080;
+	m_dx_status.d3d_present_param->BackBufferHeight = WIN_H;
 	//フルスクリーンのリフレッシュレート
 	m_dx_status.d3d_present_param->FullScreen_RefreshRateInHz = 0;
 
@@ -79,7 +79,7 @@ void DxManager::StartDraw() {
 		NULL,
 		D3DCLEAR_TARGET,
 		D3DCOLOR_ARGB(255, 0, 0, 255),
-		1.0f,	// Zバッファの初期値
+		0.0f,	// Zバッファの初期値
 		0);		// ステンシルバッファの初期値
 
 	m_dx_status.d3d_device->SetRenderState(D3DRS_ALPHABLENDENABLE, true);

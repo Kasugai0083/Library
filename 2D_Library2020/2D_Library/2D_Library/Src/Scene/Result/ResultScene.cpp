@@ -50,7 +50,7 @@ SceneID ResultScene::Control() {
 
 void ResultScene::Draw() {
 	{
-		t_VertexPos v{ Pos2(0.f,0.f),Pos2(0.f,0.f),Pos2(256.f, 256.f) };
+		t_VertexPos v{ Pos2(WIN_W / 2,WIN_H / 2),Pos2(0.f,0.f),Pos2(256.f, 256.f) };
 		m_drawer2d.DrawTexture(v, "Res/bomb.png");
 
 		t_Vec2 font_pos(50.f, 50.f);

@@ -32,8 +32,12 @@ struct t_Texture {
 */
 struct t_CustomVertex {
 
-	D3DXVECTOR3 pos;
-	D3DXVECTOR2 tex_pos;
+	float x, y, z;
+	float rhw;
+	float tu,tv;
+
+	//D3DXVECTOR3 pos;
+	//D3DXVECTOR2 tex_pos;
 
 };
 
