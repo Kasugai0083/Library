@@ -49,7 +49,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 #if 0
 		 //2D•`‰æ
-		s_DXManager->StartDraw2D();
+		dx_mgr->StartDraw2D();
 #else
 		// 3D•`‰æ
 		dx_mgr->StartDraw3D();

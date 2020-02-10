@@ -1,6 +1,5 @@
 #include "Drawer2D.h"
 #include "DirectX.h"
-#include "Grid.h"
 #include <vector>
 
 void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_)
@@ -72,51 +71,6 @@ void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_)
 	mgr->GetStatus()->d3d_device->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(t_CustomVertex));
 }
 
-// 曲線の描画現在調整中
-void Drawer2D::DrawLine(std::vector<t_LineDesc> descList_)
-{
-	// DirectX のインスタンス化
-	DxManager* mgr = DxManager::GetInstance();
-	if (!mgr) { return; }
-
-	struct LineVertex
-	{
-		float x;
-		float y;
-		float z;
-
-		float w;
-
-		DWORD color;
-	};
-
-	std::vector<LineVertex> vertex_list;
-
-	for (int i = 0; i < (int)descList_.size(); i++)
-	{
-		float tu = 0.0f;
-		float tv = 0.0f;
-
-		// ここの Color の値がおかしい
-		// alpha は想定値
-		DWORD color = D3DCOLOR_ARGB((int)(255 * descList_[i].alpha), 255, 255, 255);
-		LineVertex new_vertex =
-		{
-			descList_[i].pos.x,
-			descList_[i].pos.y,
-			0.f,
-			1.0f,
-			color
-		};
-
-		vertex_list.push_back(new_vertex);
-	}
-	mgr->GetStatus()->d3d_device->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
-
-	mgr->GetStatus()->d3d_device->SetFVF(D3DFVF_XYZRHW | D3DFVF_TEX1);
-
-	mgr->GetStatus()->d3d_device->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, vertex_list.size() - 2, &vertex_list[0], sizeof(LineVertex));
-}
 
 bool Drawer2D::CreateTexture(std::string fileName_)
 {
@@ -199,4 +153,14 @@ void Drawer2D::Release(std::string fileName_) {
 	delete[] m_ptr_tex_list[fileName_];
 
 	m_ptr_tex_list.clear();
+}
+
+void Drawer2D::AllRelease() {
+	for (auto tex : m_ptr_tex_list) 
+	{
+		if (!tex.second) {
+			delete tex.second;
+			tex.second = nullptr;
+		}
+	}
 }

@@ -2,8 +2,6 @@
 #include "Engine/Graphics/DirectX.h"
 #include "Engine/Device.h"
 #include "Engine/Graphics/Drawer2D.h"
-#include "Engine/Graphics/Slider.h"
-#include "Engine/Graphics/Grid.h"
 #include "Scene/SceneController.h"
 #include "Utility/Debug.h"
 #include <string>

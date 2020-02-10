@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../SceneBase.h"
-#include "../../Engine/Graphics/Slider.h"
+#include "../../Engine/Graphics/Drawer2D.h"
 
 
 /**
@@ -18,10 +18,7 @@ class ResultScene :public SceneBase
 {
 public:
 	//!< コンストラクタ
-	ResultScene() : 
-		m_slider1(pos1, Direction::LEFT_TO_RIGHT),
-		m_slider2(pos2, Direction::RIGHT_TO_LEFT)
-	{}
+	ResultScene(){}
 	~ResultScene()override;		//!< デストラクタ
 private:
 	void Init()override;		//!< シーンの初期化
@@ -32,9 +29,6 @@ private:
 private:
 	Drawer2D m_drawer2d;			//!< フォント表示に使用
 	
-	//!< スライダーの描画に使用
-	Slider m_slider1;				
-	Slider m_slider2;				 
 
 };
 

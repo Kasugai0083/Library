@@ -32,7 +32,7 @@
 */
 struct t_Line
 {
-	Vec3 pos;
+	t_Vec3 pos;
 	int counter;
 };
 
@@ -48,9 +48,9 @@ struct t_Line
 struct t_LineManager 
 {
 	float width;				
-	Vec3 start;				
-	Vec3 end;					
-	Vec3 center;				
+	t_Vec3 start;				
+	t_Vec3 end;					
+	t_Vec3 center;				
 	int timer;				
 	std::vector<t_Line> line;	
 };
@@ -60,7 +60,7 @@ struct t_LineManager
 */
 struct t_LineDesc 
 {
-	Vec3 pos;
+	t_Vec3 pos;
 	float alpha;
 };
 
@@ -75,7 +75,7 @@ public:
 	* @param center 線の中間点
 	* @param end	線の終点
 	*/
-	LineDrawer(Vec3 start_, Vec3 center_,Vec3 end_)
+	LineDrawer(t_Vec3 start_, t_Vec3 center_,t_Vec3 end_)
 	{
 		// 10.f でしか描画されない
 		// 訂正：Widthを上げるとどんどん高い位置で描画される

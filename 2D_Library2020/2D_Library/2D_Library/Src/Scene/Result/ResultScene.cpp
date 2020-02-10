@@ -8,26 +8,20 @@ ResultScene::~ResultScene()
 void ResultScene::Init() {
 	m_drawer2d.LoadTexture("Res/bomb.png");
 
-	m_slider1.Load("Res/Slider01.png");
-	m_slider2.Load("Res/Slider01.png");
 
 	m_state = SceneState::UPDATE;
 }
 
 void ResultScene::Update() {
 
-	m_slider1.Update();
-	m_slider2.Update();
 
 	if (Device::KeyPress('A')) { m_state = SceneState::END; }
 }
 
 SceneID ResultScene::End() {
 
-	m_drawer2d.Release("Res/bomb.png");
+	m_drawer2d.AllRelease();
 
-	m_slider1.Release("Res/Slider01.png");
-	m_slider2.Release("Res/Slider01.png");
 
 	m_state = SceneState::INIT;
 	return SceneID::TITLE;
@@ -57,8 +51,5 @@ void ResultScene::Draw() {
 		m_drawer2d.DrawFont(font_pos, "2Dƒ|ƒŠƒSƒ“‚ð•\Ž¦");
 
 	}
-
-	//m_slider1.DrawSlider("Res/Slider01.png");
-	//m_slider2.DrawSlider("Res/Slider01.png");
 
 }

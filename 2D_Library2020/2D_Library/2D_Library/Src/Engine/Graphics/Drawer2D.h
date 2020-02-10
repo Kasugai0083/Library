@@ -45,12 +45,6 @@ public:
 	}
 
 	/**
-	* @brief 曲線の描画
-	* @param 曲線の頂点情報
-	*/
-	void DrawLine(std::vector<t_LineDesc> descList_);
-
-	/**
 	* @brief テクスチャ情報を取得
 	* @return テクスチャ情報のポインタを返す
 	*/
@@ -70,6 +64,10 @@ public:
 	* @param 領域を指定
 	*/
 	void Release(std::string fileName_);
+	/**
+	* @brief 全てのテクスチャ領域を解放
+	*/
+	void AllRelease();
 
 private:
 	/**

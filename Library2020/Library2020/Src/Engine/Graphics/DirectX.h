@@ -30,10 +30,9 @@ struct t_Texture {
 * @param tex_pos テクスチャ座標
 */
 struct t_CustomVertex {
-
-	D3DXVECTOR3 pos;
-	D3DXVECTOR2 tex_pos;
-
+	float x, y, z;
+	float rhw;
+	float tu, tv;
 };
 
 /**

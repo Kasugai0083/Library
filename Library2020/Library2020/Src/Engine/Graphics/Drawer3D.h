@@ -46,7 +46,12 @@ public:		//!< XFile関連メソッド
 	* @brief 読み込んだ XFile を解放
 	*/
 	void ReleaseXFile() {
-		m_xfile_list.clear();
+		for (auto test : m_xfile_list) {
+			if (test.second != nullptr) {
+				delete test.second;
+				test.second = nullptr;
+			}
+		}
 	}
 
 public:		//!< ポリゴン関連メソッド
@@ -87,9 +92,8 @@ public:		//!< ポリゴン関連メソッド
 
 	/**
 	* @brief 指定したテクスチャ領域を解放
-	* @param 領域を指定
 	*/
-	void Release(std::string fileName_);
+	void Release();
 
 private:	//!< ポリゴン関連メソッド
 

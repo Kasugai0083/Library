@@ -16,7 +16,7 @@ void LineDrawer::UpdateLineManager() {
 	// 6 flame 後、行われる処理
 	if (m_line_mgr.timer % 6 == 0)
 	{
-		Vec3 new_pos;
+		t_Vec3 new_pos;
 
 		// persent <= こいつは何？
 		// 毎フレーム加算される Timer に 1秒 => 60フレームが割られている
@@ -77,7 +77,7 @@ void LineDrawer::DrawLine(Dimendion dim_) {
 
 	for (int i = 0; i < (int)m_line_mgr.line.size() - 1; i++)
 	{
-		Vec3 direction = Vec3(
+		t_Vec3 direction = t_Vec3(
 			// ②.保存されてる座標と次の座標でベクトルを算出する
 			m_line_mgr.line[i + 1].pos.x - m_line_mgr.line[i].pos.x,
 			m_line_mgr.line[i + 1].pos.y - m_line_mgr.line[i].pos.y,
@@ -89,7 +89,7 @@ void LineDrawer::DrawLine(Dimendion dim_) {
 		for (int j = 0; j < 2; j++)
 		{
 			// 	③．②のベクトルに対して直角なベクトルを算出する
-			Vec3 normal = Vec3(-direction.y, direction.x, direction.z);
+			t_Vec3 normal = t_Vec3(-direction.y, direction.x, direction.z);
 
 			if (j == 1)
 			{
@@ -107,7 +107,7 @@ void LineDrawer::DrawLine(Dimendion dim_) {
 			normal.z /= length;
 
 			// ⑤．線の幅 / 2 を④のベクトルに掛ける
-			Vec3 new_pos = Vec3(
+			t_Vec3 new_pos = t_Vec3(
 				direction.x + m_line_mgr.width / 2.0f * normal.x,
 				direction.y + m_line_mgr.width / 2.0f * normal.y,
 				direction.z + m_line_mgr.width / 2.0f * normal.z

@@ -1,15 +1,13 @@
 #pragma once
 
 #include "../SceneBase.h"
-#include "../../Engine/Graphics/Grid.h"
+#include "../../Engine/Graphics/Drawer2D.h"
 
 
 /**
 * @brief
 * ゲームメインのシーン処理
 */
-
-
 
 class GameScene : public SceneBase
 {
@@ -25,6 +23,5 @@ private:
 	void Draw()override;		//!< シーンの描画
 private:
 	Drawer2D m_drawer2d;			//!< フォント表示に使用
-	LineDrawer m_grid_drawer;			//!< XFileの描画に使用
 };
 

@@ -24,7 +24,7 @@ void ResultScene::Update() {
 
 SceneID ResultScene::End() {
 
-	m_drawer2d.Release("Res/bomb.png");
+	m_drawer2d.Release();
 
 	m_slider1.Release("Res/Slider01.png");
 	m_slider2.Release("Res/Slider01.png");
@@ -50,7 +50,7 @@ SceneID ResultScene::Control() {
 
 void ResultScene::Draw() {
 	{
-		t_VertexPos v{ Pos3(-5.f,-5.f,0.f),Pos2(0.f,0.f),Pos2(256.f, 256.f) };
+		t_VertexPos v{ Pos3(WIN_W / 2.f, WIN_H / 2.f,0.f),Pos2(0.f,0.f),Pos2(256.f, 256.f) };
 		m_drawer2d.DrawTexture(v, "Res/bomb.png");
 
 		t_Vec2 font_pos(50.f, 50.f);
@@ -58,7 +58,7 @@ void ResultScene::Draw() {
 
 	}
 
-	m_slider1.DrawSlider("Res/Slider01.png", Dimendion::DIMENSION_2);
-	m_slider2.DrawSlider("Res/Slider01.png", Dimendion::DIMENSION_2);
+	m_slider1.DrawSlider("Res/Slider01.png", Dimendion::DIMENSION_3);
+	m_slider2.DrawSlider("Res/Slider01.png", Dimendion::DIMENSION_3);
 
 }

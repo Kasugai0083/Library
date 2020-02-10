@@ -74,7 +74,7 @@ public:
 
 	void DrawSlider(std::string fileName_, Dimendion dim_);
 
-	void Release(std::string fileName_) {	m_drawer2d.Release(fileName_); }
+	void Release(std::string fileName_) {	m_drawer2d.Release(); }
 
 private:
 	/**

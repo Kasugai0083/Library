@@ -142,7 +142,7 @@ void Drawer3D::DrawSetting(float x_, float y_, float z_) {
 	// カルモード(板の裏っかわも描画)
 	mgr->GetStatus()->d3d_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	mgr->GetStatus()->d3d_device->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
+	mgr->GetStatus()->d3d_device->SetFVF(D3DFVF_XYZRHW | D3DFVF_TEX1);
 
 
 }
@@ -166,14 +166,22 @@ void Drawer3D::DrawTexture(t_VertexPos v_, std::string fileName_)
 		bottom_tv = (v_.tex_pos_start.y + v_.tex_pos_end.y) / m_ptr_tex_list[fileName_]->height;
 	}
 
+	float harf_x = 0.f;
+	float harf_y = 0.f;
+	// 中心点の座標を指定する場合
+	if (m_ptr_tex_list[fileName_]) {
+		harf_x = m_ptr_tex_list[fileName_]->width / 2.0f;
+		harf_y = m_ptr_tex_list[fileName_]->height / 2.0f;
+	}
+
 	// デカイポリゴン問題
 	// ここの値も正常
 	t_CustomVertex v[] =
 	{
-		{ D3DXVECTOR3(v_.tex_pos_start.x, v_.tex_pos_start.y + v_.tex_pos_end.y, 0.0f), D3DXVECTOR2(left_tu, top_tv) },						// 左上
-		{ D3DXVECTOR3(v_.tex_pos_start.x + v_.tex_pos_end.x, v_.tex_pos_start.y + v_.tex_pos_end.y, 0.0f), D3DXVECTOR2(right_tu, top_tv) }, // 右上
-		{ D3DXVECTOR3(v_.tex_pos_start.x + v_.tex_pos_end.x, v_.tex_pos_start.y, 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },					// 右下
-		{ D3DXVECTOR3(v_.tex_pos_start.x, v_.tex_pos_start.y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },										// 左下
+		{ v_.pos.x - harf_x, v_.pos.y - harf_y, v_.pos.z, 1.f,left_tu, top_tv},			// 左上
+		{ v_.pos.x + harf_x, v_.pos.y - harf_y, v_.pos.z, 1.f,right_tu, top_tv},			// 右上
+		{ v_.pos.x + harf_x, v_.pos.y + harf_y, v_.pos.z, 1.f,right_tu, bottom_tv},			// 右下
+		{ v_.pos.x - harf_x, v_.pos.y + harf_y, v_.pos.z, 1.f,left_tu, bottom_tv},			// 左下
 	};
 
 	if (m_ptr_tex_list[fileName_]) {
@@ -278,9 +286,12 @@ bool Drawer3D::CreateTexture(std::string fileName_)
 	return true;
 }
 
-void Drawer3D::Release(std::string fileName_) {
+void Drawer3D::Release() {
 
-	delete m_ptr_tex_list[fileName_];
-
-	m_ptr_tex_list.clear();
+	for (auto test : m_ptr_tex_list) {
+		if (test.second != nullptr) {
+			delete test.second;
+			test.second = nullptr;
+		}
+	}
 }

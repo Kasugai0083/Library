@@ -68,7 +68,7 @@ public:
 	* @brief 指定したテクスチャ領域を解放
 	* @param 領域を指定
 	*/
-	void Release(std::string fileName_);
+	void Release();
 
 private:
 	/**

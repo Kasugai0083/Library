@@ -10,9 +10,9 @@
 
 //!< ‹Èü‚Ì’Ê‰ß“_‚ðŽw’è
 namespace {
-	Vec3 start(-5.f, -1.f, 0.f);
-	Vec3 center(10.f, 2.f, 0.f);
-	Vec3 end(20.f, -2.f, 0.f);
+	t_Vec3 start(-5.f, -1.f, 0.f);
+	t_Vec3 center(10.f, 2.f, 0.f);
+	t_Vec3 end(20.f, -2.f, 0.f);
 }
 
 class GameScene : public SceneBase

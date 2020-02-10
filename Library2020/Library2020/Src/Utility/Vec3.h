@@ -10,10 +10,10 @@
 //=====================================================================//
 //! Vector用構造体(3D版)
 //=====================================================================//
-typedef struct Vec3
+typedef struct t_Vec3
 {
 	/** Constructor */
-	Vec3()
+	t_Vec3()
 	{
 		x = 0.0f;
 		y = 0.0f;
@@ -26,7 +26,7 @@ typedef struct Vec3
 	* @param[in] y 縦幅
 	* @param[in] z 奥行
 	*/
-	Vec3(float x_, float y_, float z_)
+	t_Vec3(float x_, float y_, float z_)
 	{
 		x = x_;
 		y = y_;
@@ -35,9 +35,9 @@ typedef struct Vec3
 
 	/**
 	* @brief Constructor
-	* @param[in] Vec3 コピー用Vec2データ
+	* @param[in] t_Vec3 コピー用Vec2データ
 	*/
-	Vec3(const Vec3& size)
+	t_Vec3(const t_Vec3& size)
 	{
 		this->x = size.x;
 		this->y = size.y;
