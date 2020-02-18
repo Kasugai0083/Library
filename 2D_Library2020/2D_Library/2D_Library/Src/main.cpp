@@ -52,7 +52,7 @@ int APIENTRY WinMain(HINSTANCE ,HINSTANCE, LPSTR, INT)
 
 		dx_mgr->EndDraw();
 
-#if 1
+#if 0
 		//メモリリークをチェック
 		_CrtDumpMemoryLeaks();
 #endif

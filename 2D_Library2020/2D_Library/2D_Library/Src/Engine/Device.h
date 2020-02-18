@@ -66,7 +66,13 @@ namespace Device{
 
 	/**
 	* @brief マウスがクリックされたかどうかを判定
+	* @return マウスがクリックされていた場合 => true
+	*/
+	const bool MouseOn();
+	
+	/**
+	* @brief マウスがクリックされたかどうかを判定
 	* @return マウスがクリックされた場合 => true
 	*/
-	const bool HasClickOnMouse();
+	const bool MousePress();
 }

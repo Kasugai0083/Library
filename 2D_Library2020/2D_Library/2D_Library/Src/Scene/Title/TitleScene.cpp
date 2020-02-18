@@ -17,7 +17,7 @@ void TitleScene::Init() {
 
 void TitleScene::Update() {
 
-	if (Device::KeyPress('A')) { m_state = SceneState::END; }
+	if (Device::MousePress()) { m_state = SceneState::END; }
 }
 
 SceneID TitleScene::End() {

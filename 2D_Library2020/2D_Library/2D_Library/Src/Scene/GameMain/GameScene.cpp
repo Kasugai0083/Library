@@ -14,7 +14,7 @@ void GameScene::Init()
 
 void GameScene::Update() {
 
-	if (Device::KeyPress('A')) { m_state = SceneState::END; }
+	if (Device::MousePress()) { m_state = SceneState::END; }
 }
 
 SceneID GameScene::End() {

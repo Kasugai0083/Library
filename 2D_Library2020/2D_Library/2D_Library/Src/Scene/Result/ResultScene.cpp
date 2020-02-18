@@ -15,7 +15,7 @@ void ResultScene::Init() {
 void ResultScene::Update() {
 
 
-	if (Device::KeyPress('A')) { m_state = SceneState::END; }
+	if (Device::MousePress()) { m_state = SceneState::END; }
 }
 
 SceneID ResultScene::End() {
