@@ -27,9 +27,9 @@ public:
 	* @param v_ ポリゴンの頂点情報 と テクスチャの座標情報
 	* @param fileName_ m_ptr_tex_list の要素
 	*/
-	void DrawTexture(t_VertexPos v_, std::string fileName_, int numX_ = 0, int numY_ = 0);
+	void DrawTexture(t_VertexPos v_, std::string fileName_);
 	/**
-	* @brief 簡易版
+	* @brief 簡易版 現在非推奨
 	*/
 	void DrawTexture(Pos2 v_, std::string fileName_, int numX_, int numY_, int maxNumX_, int maxNumY_);
 
