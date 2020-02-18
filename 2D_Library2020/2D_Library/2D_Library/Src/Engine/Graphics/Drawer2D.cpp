@@ -12,22 +12,29 @@ void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_, int numX_, int
 	float top_tv = 0.f;
 	float bottom_tv = 1.f;
 	
-	if (m_ptr_tex_list[fileName_] ) {
-		left_tu = v_.tex_pos_start.x / m_ptr_tex_list[fileName_]->width;
-		right_tu =(v_.tex_pos_start.x + v_.tex_pos_end.x) / m_ptr_tex_list[fileName_]->width;
-		top_tv = v_.tex_pos_start.y / m_ptr_tex_list[fileName_]->height;
-		bottom_tv = (v_.tex_pos_start.y + v_.tex_pos_end.y) / m_ptr_tex_list[fileName_]->height;
+	if (m_ptr_tex_list[fileName_] ) 
+	{
+		left_tu = v_.tex_pos_start.x * numX_ / m_ptr_tex_list[fileName_]->width;
+		right_tu =(v_.tex_pos_start.x + v_.tex_pos_end.x) * (numX_ + 1) / m_ptr_tex_list[fileName_]->width;
+		top_tv = v_.tex_pos_start.y * numY_ / m_ptr_tex_list[fileName_]->height;
+		bottom_tv = (v_.tex_pos_start.y + v_.tex_pos_end.y) * (numY_ + 1) / m_ptr_tex_list[fileName_]->height;
+		//left_tu = v_.tex_pos_start.x / m_ptr_tex_list[fileName_]->width;
+		//right_tu =(v_.tex_pos_start.x + v_.tex_pos_end.x) / m_ptr_tex_list[fileName_]->width;
+		//top_tv = v_.tex_pos_start.y / m_ptr_tex_list[fileName_]->height;
+		//bottom_tv = (v_.tex_pos_start.y + v_.tex_pos_end.y) / m_ptr_tex_list[fileName_]->height;
 	}
 
-#if 0
-	// デカイポリゴン問題
-	// ここの値も正常
+#if 1
+
+	float width = v_.tex_pos_end.x - v_.tex_pos_start.x;
+	float height = v_.tex_pos_end.y - v_.tex_pos_start.y;
+
 	t_CustomVertex v[] =
 	{
-		{ D3DXVECTOR3(v_.tex_pos_start.x, v_.tex_pos_start.y, 0.0f), D3DXVECTOR2(left_tu, top_tv) },															// 左上
-		{ D3DXVECTOR3(v_.tex_pos_start.x, (v_.tex_pos_start.y + v_.tex_pos_end.y), 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },									// 左下
-		{ D3DXVECTOR3((v_.tex_pos_start.x + v_.tex_pos_end.x), (v_.tex_pos_start.y + v_.tex_pos_end.y), 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },				// 右下
-		{ D3DXVECTOR3((v_.tex_pos_start.x + v_.tex_pos_end.x), v_.tex_pos_start.y, 0.0f), D3DXVECTOR2(right_tu, top_tv)},										// 右上
+		{ v_.pos.x, v_.pos.y, 0.0f, 1.f,left_tu, top_tv},			// 左上
+		{ v_.pos.x + width, v_.pos.y, 0.0f, 1.f,right_tu, top_tv},			// 右上
+		{ v_.pos.x + width, v_.pos.y + height, 0.0f, 1.f,right_tu, bottom_tv},			// 右下
+		{ v_.pos.x, v_.pos.y + height, 0.0f, 1.f,left_tu, bottom_tv},			// 左下
 	};
 #else
 	float harf_x = 0.f;
@@ -41,16 +48,6 @@ void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_, int numX_, int
 	// 三角形を描画
 	t_CustomVertex v[] =
 	{
-		//{ D3DXVECTOR3(-harf_x, harf_y, 0.0f),  D3DXVECTOR2(left_tu, top_tv) },				// 左上
-		//{ D3DXVECTOR3(harf_x, harf_y, 0.0f),   D3DXVECTOR2(right_tu, top_tv) },				// 右上
-		//{ D3DXVECTOR3(harf_x, -harf_y, 0.0f),  D3DXVECTOR2(right_tu, bottom_tv) },			// 右下
-		//{ D3DXVECTOR3(-harf_x, -harf_y, 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },			// 左下
-
-		//{ -harf_x, -harf_y, 0.0f, 1.f,left_tu, top_tv},			// 左上
-		//{ -harf_x, harf_y, 0.0f, 1.f,left_tu, bottom_tv},			// 左下
-		//{ harf_x, harf_y, 0.0f, 1.f,right_tu, bottom_tv},			// 右下
-		//{ harf_x, -harf_y, 0.0f, 1.f,right_tu, top_tv},			// 右上
-
 		{ v_.pos.x - harf_x, v_.pos.y - harf_y, 0.0f, 1.f,left_tu, top_tv},			// 左上
 		{ v_.pos.x + harf_x, v_.pos.y - harf_y, 0.0f, 1.f,right_tu, top_tv},			// 右上
 		{ v_.pos.x + harf_x, v_.pos.y + harf_y, 0.0f, 1.f,right_tu, bottom_tv},			// 右下
@@ -70,6 +67,64 @@ void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_, int numX_, int
 
 	mgr->GetStatus()->d3d_device->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(t_CustomVertex));
 }
+//void Drawer2D::DrawTexture(Pos2 v_, std::string fileName_, int numX_, int numY_, int maxNumX_, int maxNumY_)
+//{
+//	DxManager* mgr = DxManager::GetInstance();
+//	if (!mgr) { return; }
+//
+//	float left_tu = 0.f;
+//	float right_tu = 1.f;
+//	float top_tv = 0.f;
+//	float bottom_tv = 1.f;
+//	
+//	if (m_ptr_tex_list[fileName_] ) {
+//		left_tu = ((float)numX_ * m_ptr_tex_list[fileName_]->width) / m_ptr_tex_list[fileName_]->width;
+//		right_tu =(v_.tex_pos_start.x + v_.tex_pos_end.x) / m_ptr_tex_list[fileName_]->width;
+//		top_tv = v_.tex_pos_start.y / m_ptr_tex_list[fileName_]->height;
+//		bottom_tv = (v_.tex_pos_start.y + v_.tex_pos_end.y) / m_ptr_tex_list[fileName_]->height;
+//	}
+//
+//#if 0
+//	// デカイポリゴン問題
+//	// ここの値も正常
+//	t_CustomVertex v[] =
+//	{
+//		{ D3DXVECTOR3(v_.tex_pos_start.x, v_.tex_pos_start.y, 0.0f), D3DXVECTOR2(left_tu, top_tv) },															// 左上
+//		{ D3DXVECTOR3(v_.tex_pos_start.x, (v_.tex_pos_start.y + v_.tex_pos_end.y), 0.0f), D3DXVECTOR2(left_tu, bottom_tv) },									// 左下
+//		{ D3DXVECTOR3((v_.tex_pos_start.x + v_.tex_pos_end.x), (v_.tex_pos_start.y + v_.tex_pos_end.y), 0.0f), D3DXVECTOR2(right_tu, bottom_tv) },				// 右下
+//		{ D3DXVECTOR3((v_.tex_pos_start.x + v_.tex_pos_end.x), v_.tex_pos_start.y, 0.0f), D3DXVECTOR2(right_tu, top_tv)},										// 右上
+//	};
+//#else
+//	float harf_x = 0.f;
+//	float harf_y = 0.f;
+//	// 中心点の座標を指定する場合
+//	if (m_ptr_tex_list[fileName_]) {
+//		harf_x = (m_ptr_tex_list[fileName_]->width / (numX_ + 1)) / 2.0f;
+//		harf_y = (m_ptr_tex_list[fileName_]->height / (numY_ + 1)) / 2.0f;
+//	}
+//
+//	// 三角形を描画
+//	t_CustomVertex v[] =
+//	{
+//		{ v_.pos.x - harf_x, v_.pos.y - harf_y, 0.0f, 1.f,left_tu, top_tv},			// 左上
+//		{ v_.pos.x + harf_x, v_.pos.y - harf_y, 0.0f, 1.f,right_tu, top_tv},			// 右上
+//		{ v_.pos.x + harf_x, v_.pos.y + harf_y, 0.0f, 1.f,right_tu, bottom_tv},			// 右下
+//		{ v_.pos.x - harf_x, v_.pos.y + harf_y, 0.0f, 1.f,left_tu, bottom_tv},			// 左下
+//	};
+//#endif
+//
+//	// 法線を設定していないの
+//
+//	if (m_ptr_tex_list[fileName_]) {
+//		mgr->GetStatus()->d3d_device->SetTexture(0, m_ptr_tex_list[fileName_]->texture_data);
+//	}
+//	// ライティング
+//	mgr->GetStatus()->d3d_device->SetRenderState(D3DRS_LIGHTING, FALSE);	// RHWで無い頂点はLIGHTが効くので無効にしておく
+//
+//	mgr->GetStatus()->d3d_device->SetFVF(D3DFVF_XYZRHW | D3DFVF_TEX1);
+//
+//	mgr->GetStatus()->d3d_device->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(t_CustomVertex));
+//}
 
 
 bool Drawer2D::CreateTexture(std::string fileName_)
