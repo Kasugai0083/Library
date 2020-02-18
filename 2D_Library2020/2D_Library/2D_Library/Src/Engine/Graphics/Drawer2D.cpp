@@ -2,7 +2,7 @@
 #include "DirectX.h"
 #include <vector>
 
-void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_)
+void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_, int numX_, int numY_)
 {
 	DxManager* mgr = DxManager::GetInstance();
 	if (!mgr) { return; }
@@ -34,8 +34,8 @@ void Drawer2D::DrawTexture(t_VertexPos v_, std::string fileName_)
 	float harf_y = 0.f;
 	// 中心点の座標を指定する場合
 	if (m_ptr_tex_list[fileName_]) {
-		harf_x = m_ptr_tex_list[fileName_]->width / 2.0f;
-		harf_y = m_ptr_tex_list[fileName_]->height / 2.0f;
+		harf_x = (m_ptr_tex_list[fileName_]->width / (numX_ + 1)) / 2.0f;
+		harf_y = (m_ptr_tex_list[fileName_]->height / (numY_ + 1)) / 2.0f;
 	}
 
 	// 三角形を描画
